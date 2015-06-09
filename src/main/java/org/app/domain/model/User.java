@@ -48,7 +48,7 @@ public class User extends AbstractBase<User>
 	@Column(name="username", unique = true)
 	private String username;
 
-	@JsonIgnore
+	@NotNull
 	@Column(name="password")
 	private String password;
 
@@ -208,24 +208,31 @@ public class User extends AbstractBase<User>
 		this.modificationDate = date;
 	}
 
-	//--------------------------------------------------------------------------------------------------
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj) return true;
-		if ((obj == null) || (getClass() != obj.getClass()))
-			return false;
-
-		User user = (User) obj;
-
-		return this.getPrimaryKey().equals(user.getPrimaryKey())
-				&& this.getUsername().equals(user.getUsername());
-	}
-
 	// --------------------------------------------------------------------------------------------------
 	@Override
-	public int hashCode()
+	public String toString()
 	{
-		return this.getPrimaryKey().hashCode();
+		StringBuilder builder = new StringBuilder();
+		builder.append("User [");
+		builder.append("username=");
+		builder.append(username);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", lastName=");
+		builder.append(lastName);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", openId=");
+		builder.append(openId);
+		builder.append(", isEnabled=");
+		builder.append(isEnabled);
+		builder.append(", isExpired=");
+		builder.append(isExpired);
+		builder.append(", isLocked=");
+		builder.append(isLocked);
+		builder.append("]");
+		return builder.toString();
 	}
 }

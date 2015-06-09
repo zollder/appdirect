@@ -6,7 +6,7 @@ USE `appdirect`;
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE  `user`
 (
-  primaryKey int(10) unsigned NOT NULL primary key auto_increment,
+  primaryKey int(10) unsigned NOT NULL AUTO_INCREMENT,
   firstName varchar(45) DEFAULT NULL,
   lastName varchar(45) DEFAULT NULL,
   email varchar(45) DEFAULT NULL,
@@ -28,7 +28,7 @@ VALUES (1,'Admin','User','admin@email.com','adminuser','d9acd48369a1a20280c8c3b6
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE  `role`
 (
-  primaryKey int(10) unsigned NOT NULL primary key auto_increment,
+  primaryKey int(10) unsigned NOT NULL AUTO_INCREMENT,
   roleName varchar(45) NOT NULL,
   roleDescription varchar(80) DEFAULT NULL,
   PRIMARY KEY (primaryKey)
@@ -40,7 +40,7 @@ VALUES (1,'ROLE_ADMIN','System administrator');
 DROP TABLE IF EXISTS `user_role_association`;
 CREATE TABLE  `user_role_association`
 (
-  primaryKey int(10) unsigned NOT NULL primary key auto_increment,
+  primaryKey int(10) unsigned NOT NULL AUTO_INCREMENT,
   authorityUser int(10) NOT NULL,
   authorityRole int(10) NOT NULL,
   PRIMARY KEY (primaryKey)

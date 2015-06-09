@@ -1,8 +1,18 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.2'
+    }
+}
 
 apply plugin: 'base'
 apply plugin: 'war'		// extends java to build war
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'com.bmuschko.tomcat'
 
 sourceCompatibility = 1.8
 version = '1.0'
@@ -21,19 +31,26 @@ version = '1.0'
 	ext {
 		junitVersion = '4.+'
 		commonsVersion = '3.2'
-		h2version = '1.4.186'
+		//h2version = '1.4.186'
 		javaxServletVersion = '3.1.0'
 		springVersion = '4.1.5.RELEASE'
 		springSecurityVersion = '4.0.1.RELEASE'
-		springOauthVersion = "1.0.4.RELEASE"
+		springOauthVersion = '2.0.7.RELEASE'
 		javaxValidationVersion = '1.1.0.Final'
 		fasterXmlJacksonVersion = '2.5.3'
 		springDataVersion = '1.8.0.RELEASE'
 		hibernateVersion = '4.3.10.Final'
 		hibernateValidatorVersion = '5.1.3.Final'
+		mysqlConnectorVersion = '5.1.35'
+		'mysql:mysql-connector-java:5.1.35'
+		tomcatVersion = '7.0.59'
 	}
     
 	dependencies {
+		tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+           "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+           "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+           
 	    testCompile group: 'junit', name: 'junit', version: junitVersion
 	    compile group: 'commons-collections', name: 'commons-collections', version: commonsVersion
 	    compile 'ch.qos.logback:logback-classic:1.1.2'
@@ -46,7 +63,8 @@ version = '1.0'
 	    compile group: 'com.fasterxml.jackson.core', name:'jackson-databind', version: fasterXmlJacksonVersion
 	    compile group: 'com.fasterxml.jackson.core', name:'jackson-annotations', version: fasterXmlJacksonVersion
 
-	    compile group: 'com.h2database', name: 'h2', version: h2version
+	    // compile group: 'com.h2database', name: 'h2', version: h2version
+	    compile group: 'mysql', name: 'mysql-connector-java', version: mysqlConnectorVersion
 	    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: hibernateVersion
 	    compile group: 'org.hibernate', name: 'hibernate-validator', version: hibernateValidatorVersion
     	compile group: 'org.springframework.data', name:'spring-data-jpa', version: springDataVersion
@@ -57,6 +75,8 @@ version = '1.0'
         compile group: 'org.springframework.security', name:'spring-security-core', version: springSecurityVersion
     	compile group: 'org.springframework.security', name:'spring-security-config', version: springSecurityVersion
     	compile group: 'org.springframework.security', name:'spring-security-web', version: springSecurityVersion
+    	compile group: 'org.springframework.security', name:'spring-security-openid', version: springSecurityVersion
+    	compile group: 'org.springframework.security.oauth', name:'spring-security-oauth', version: springOauthVersion
 	}
 
 	test { systemProperties 'property': 'value' }

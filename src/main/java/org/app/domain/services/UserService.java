@@ -4,6 +4,10 @@ import java.util.List;
 
 import org.app.domain.model.User;
 
+//--------------------------------------------------------------------------------------------------
+/** UserService interface.
+ *  Declares services related to system user management. */
+//--------------------------------------------------------------------------------------------------
 public interface UserService
 {
 	/** Loads {@link User} entity by primary key (id). Throws DataNotFoundException. */

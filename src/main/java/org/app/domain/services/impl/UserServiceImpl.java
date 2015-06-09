@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService
 	public void delete(Integer key)
 	{
 		if (!userRepository.exists(key))
-			throw new DataNotFoundException(String.format("entity with key '%s' not found", key));
+			throw new DataNotFoundException(String.format("entity with key '%d' not found", key));
 
 		userRepository.delete(key);
 	}
