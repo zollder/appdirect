@@ -114,20 +114,4 @@ public class UserServiceImpl implements UserService
 
 		userRepository.delete(key);
 	}
-
-	// ---------------------------------------------------------------------------------------------
-//	@Transactional
-//	public User resetPassword(Long primaryKey, PasswordReset resetPassword)
-//	{
-//		User entity = loadWithPrimaryKey(primaryKey);
-//		entity.resetPassword(resetPassword);
-//		update(entity);
-//
-//		return entity;
-//	}
-
-
-
-
-
 }
