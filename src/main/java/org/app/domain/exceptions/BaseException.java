@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.app.domain.dto.Violation;
+import org.app.domain.model.dto.Violation;
 
 // --------------------------------------------------------------------------------------------------------
 /** Base exception class implementation. */

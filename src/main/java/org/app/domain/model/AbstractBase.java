@@ -25,7 +25,6 @@ public abstract class AbstractBase<T> implements Serializable
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer primaryKey;
 
-
 	// --------------------------------------------------------------------------------------------------
 	public Integer getPrimaryKey()
 	{

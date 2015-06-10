@@ -1,12 +1,3 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.2'
-    }
-}
 
 apply plugin: 'base'
 apply plugin: 'war'		// extends java to build war
@@ -16,13 +7,13 @@ apply plugin: 'com.bmuschko.tomcat'
 
 sourceCompatibility = 1.8
 version = '1.0'
+war.archiveName "appdirect.war"
 
 	jar {
 	    baseName = 'AppDirect'
 	    version =  version
 	}
 	
-	war.archiveName "appdirect.war"
 	
 	repositories {
 	    mavenCentral()
@@ -30,6 +21,8 @@ version = '1.0'
 	
 	ext {
 		junitVersion = '4.+'
+		logbackVersion = '1.1.2'
+		log4jVersion = '1.2.17'
 		commonsVersion = '3.2'
 		//h2version = '1.4.186'
 		javaxServletVersion = '3.1.0'
@@ -44,39 +37,55 @@ version = '1.0'
 		mysqlConnectorVersion = '5.1.35'
 		'mysql:mysql-connector-java:5.1.35'
 		tomcatVersion = '7.0.59'
+		openIdVersion = '1.0.0'
 	}
-    
+
+	// required to deploy to embedded tomcat (optional, use tomcatRunWar to start and deploy)
+    buildscript {
+	    repositories {
+	    	mavenCentral()
+	        jcenter()
+	    }
+	
+	    dependencies {
+	        classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.2'
+	    }
+	}
+
 	dependencies {
-		tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-           "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
-           "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+		tomcat	"org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+				"org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+				"org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
            
 	    testCompile group: 'junit', name: 'junit', version: junitVersion
-	    compile group: 'commons-collections', name: 'commons-collections', version: commonsVersion
-	    compile 'ch.qos.logback:logback-classic:1.1.2'
-	    compile 'log4j:log4j:1.2.17'
+	    
+	    compile	"commons-collections:commons-collections:$commonsVersion",
+	    		"ch.qos.logback:logback-classic:$logbackVersion",
+	    		"log4j:log4j:$log4jVersion",
 
-	    compile group: 'javax.servlet', name:'javax.servlet-api', version: javaxServletVersion
-	    compile group: 'javax.validation', name:'validation-api', version: javaxValidationVersion
+	    		"javax.servlet:javax.servlet-api:$javaxServletVersion",
+	    		"javax.validation:validation-api:$javaxValidationVersion",
 
-	    compile group: 'com.fasterxml.jackson.core', name:'jackson-core', version: fasterXmlJacksonVersion
-	    compile group: 'com.fasterxml.jackson.core', name:'jackson-databind', version: fasterXmlJacksonVersion
-	    compile group: 'com.fasterxml.jackson.core', name:'jackson-annotations', version: fasterXmlJacksonVersion
+	    		"com.fasterxml.jackson.core:jackson-core:$fasterXmlJacksonVersion",
+	    		"com.fasterxml.jackson.core:jackson-databind:$fasterXmlJacksonVersion",
+	    		"com.fasterxml.jackson.core:jackson-annotations:$fasterXmlJacksonVersion",
+	    		
+	    		// "com.h2database:h2:$h2version",
+	    		"mysql:mysql-connector-java:$mysqlConnectorVersion",
+				"org.springframework.data:spring-data-jpa:$springDataVersion",
+	    		"org.hibernate:hibernate-entitymanager:$hibernateVersion",
+				"org.hibernate:hibernate-validator:$hibernateValidatorVersion",
 
-	    // compile group: 'com.h2database', name: 'h2', version: h2version
-	    compile group: 'mysql', name: 'mysql-connector-java', version: mysqlConnectorVersion
-	    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: hibernateVersion
-	    compile group: 'org.hibernate', name: 'hibernate-validator', version: hibernateValidatorVersion
-    	compile group: 'org.springframework.data', name:'spring-data-jpa', version: springDataVersion
+				"org.springframework:spring-context:$springVersion",
+				"org.springframework:spring-webmvc:$springVersion",
+				
+				"org.springframework.security:spring-security-core:$springSecurityVersion",
+				"org.springframework.security:spring-security-config:$springSecurityVersion",
+				"org.springframework.security:spring-security-web:$springSecurityVersion",
+				"org.springframework.security:spring-security-openid:$springSecurityVersion",
+				"org.springframework.security.oauth:spring-security-oauth:$springOauthVersion",
 
-        compile group: 'org.springframework', name:'spring-context', version: springVersion
-    	compile group: 'org.springframework', name:'spring-webmvc', version: springVersion
-
-        compile group: 'org.springframework.security', name:'spring-security-core', version: springSecurityVersion
-    	compile group: 'org.springframework.security', name:'spring-security-config', version: springSecurityVersion
-    	compile group: 'org.springframework.security', name:'spring-security-web', version: springSecurityVersion
-    	compile group: 'org.springframework.security', name:'spring-security-openid', version: springSecurityVersion
-    	compile group: 'org.springframework.security.oauth', name:'spring-security-oauth', version: springOauthVersion
+				"org.openid4java:openid4java:$openIdVersion"
 	}
 
 	test { systemProperties 'property': 'value' }

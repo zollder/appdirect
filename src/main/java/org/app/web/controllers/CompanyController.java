@@ -3,8 +3,8 @@ package org.app.web.controllers;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.app.domain.model.User;
-import org.app.domain.services.UserService;
+import org.app.domain.model.Company;
+import org.app.domain.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 //-------------------------------------------------------------------------------------------------------------------------------------
 @Controller
-@RequestMapping(value = "/user")
-public class UserController
+@RequestMapping(value = "/company")
+public class CompanyController
 {
-	private static Logger logger = Logger.getLogger(UserController.class);
+	private static Logger logger = Logger.getLogger(CompanyController.class);
 	// ----------------------------------------------------------------------------------------------
 	@Autowired
-	private UserService userService;
+	private CompanyService companyService;
 
 	// ----------------------------------------------------------------------------------------------
 	/** TEST */
@@ -35,58 +35,80 @@ public class UserController
     }
 
 	// ----------------------------------------------------------------------------------------------
-	/** Retrieves {@link User} resource associated to the given key (JSON). */
+	/** Retrieves {@link Company} resource associated to the given key (JSON). */
 	// ----------------------------------------------------------------------------------------------
 	@RequestMapping(value = "/{key}", method = { RequestMethod.GET })
 	@ResponseBody
-	public User loadWithPrimaryKey(@PathVariable Integer key)
+	public Company loadCompanyByPrimaryKey(@PathVariable Integer key)
 	{
-		logger.info("load user with primary key:" + key);
-		return userService.loadByPrimaryKey(key);
+		logger.info("load company with primary key:" + key);
+		return companyService.loadByPrimaryKey(key);
 	}
 
 	// ----------------------------------------------------------------------------------------------
-	/** Retrieves all Users. Returns a collection of {@link User} entities. */
+	/** Retrieves {@link Company} resource associated to the given name (JSON). */
+	// ----------------------------------------------------------------------------------------------
+	@RequestMapping(value = "/name/{name}", method = { RequestMethod.GET })
+	@ResponseBody
+	public Company loadCompanyByName(@PathVariable String name)
+	{
+		logger.info("load company with name:" + name);
+		return companyService.loadByName(name);
+	}
+
+	// ----------------------------------------------------------------------------------------------
+	/** Retrieves {@link Company} resource associated to the given UUID (JSON). */
+	// ----------------------------------------------------------------------------------------------
+	@RequestMapping(value = "/uuid/{id}", method = { RequestMethod.GET })
+	@ResponseBody
+	public Company loadCompanyByUuid(@PathVariable String id)
+	{
+		logger.info("load company with UUID:" + id);
+		return companyService.loadByUuid(id);
+	}
+
+	// ----------------------------------------------------------------------------------------------
+	/** Retrieves a collection of all {@link Company} entities. */
 	// ----------------------------------------------------------------------------------------------
 	@RequestMapping(value = "/all", method = { RequestMethod.GET })
 	@ResponseBody
-	public List<User> loadAll()
+	public List<Company> loadAll()
 	{
-		return userService.findAll();
+		return companyService.findAll();
 	}
 
 	// ----------------------------------------------------------------------------------------------
-	/** Inserts the {@link User} resource received in the payload. */
+	/** Inserts the {@link Company} resource received in the payload. */
 	// ----------------------------------------------------------------------------------------------
 	@RequestMapping(method = { RequestMethod.POST })
 	@ResponseBody
-	public User save(@RequestBody User user)
+	public Company save(@RequestBody Company company)
 	{
-		logger.info("saving user with openId:" + user.getOpenId());
-		return userService.save(user);
+		logger.info("saving company with UUID:" + company.getUuid());
+		return companyService.save(company);
 	}
 
 	// ----------------------------------------------------------------------------------------------
-	/** Updates the {@link User} resource. */
+	/** Updates the {@link Company} resource. */
 	// ----------------------------------------------------------------------------------------------
 	@RequestMapping(value = "/{key}", method = { RequestMethod.PUT })
 	@ResponseBody
-	public User update(@PathVariable Integer key, @RequestBody User user)
+	public Company update(@PathVariable Integer key, @RequestBody Company company)
 	{
-		logger.info("update user with openId:" + user.getOpenId());
-		user.setPrimaryKey(key);
-		return userService.update(user);
+		logger.info("updating company with openId:" + company.getUuid());
+		company.setPrimaryKey(key);
+		return companyService.update(company);
 	}
 
 
 	// ----------------------------------------------------------------------------------------------
-	/** Deletes the {@link User} resource associated to a given key. */
+	/** Deletes the {@link Company} resource associated to a given key. */
 	// ----------------------------------------------------------------------------------------------
 	@RequestMapping(value = "/{key}", method = { RequestMethod.DELETE })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Integer key)
 	{
-		logger.info("delete user with primary key:" + key);
-		userService.delete(key);
+		logger.info("deleting company with primary key:" + key);
+		companyService.delete(key);
 	}
 }

@@ -1,23 +1,30 @@
 package org.app.domain.services;
 
-import org.app.domain.dto.ResponseMessage;
+import org.app.domain.model.Response;
+import org.app.domain.model.User;
 
 //--------------------------------------------------------------------------------------------------
 /** SubscriptionEventService interface.
- *  Declares services related to subscription event handing. */
+ *  Declares available subscription and assignment event handing services. */
 //--------------------------------------------------------------------------------------------------
-public interface SubscriptionEventService
+public interface EventService
 {
 	/** Creates a new subscription/order. Returns confirmation message. */
-	public ResponseMessage createSubscription(String event);
+	public Response createSubscription(String event);
 
 	/** Modifies (upgrade/downgrade/change) an existing subscription/order.
 	 *  Returns confirmation message. */
-	public ResponseMessage modifySubscription(String event);
+	public Response modifySubscription(String event);
 
 	/** Cancels an existing subscription/order. Returns confirmation message. */
-	public ResponseMessage cancelSubscription(String event);
+	public Response cancelSubscription(String event);
 
 	/** Returns a status of an existing subscription/order. */
-	public ResponseMessage getSubscriptionStatus(String event);
+	public Response getSubscriptionStatus(String event);
+
+	/** Assigns a {@link User} to an application. */
+	public Response assign(String event);
+
+	/** Unassigns a {@link User} from an application. */
+	public Response unassign(String event);
 }

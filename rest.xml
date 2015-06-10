@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="appdirect" resourceRoot="" soapui-version="5.1.3" abortOnError="false" runType="SEQUENTIAL" id="95429ecc-c316-48fa-9a02-a30634a2da92" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings/>
+  
+  <con:testSuite name="app" id="a018a2ae-c4bb-4223-b610-4bcd9c154307">
+    <con:settings>
+      <con:setting id="IncludeOverview">true</con:setting>
+      <con:setting id="IncludeResults">true</con:setting>
+      <con:setting id="FlowLayout">false</con:setting>
+      <con:setting id="ErrorDetails">true</con:setting>
+      <con:setting id="IncludeCoverage">true</con:setting>
+      <con:setting id="GeneratableJUnitReport@Style">Multiple Pages</con:setting>
+      <con:setting id="GeneratableJUnitReport@Folder"/>
+    </con:settings>
+    <con:runType>SEQUENTIAL</con:runType>
+    
+    <con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="true" maxResults="0" name="User CRUD" searchProperties="true" id="93054906-7c4e-401b-b219-c4fef3dff94a">
+      <con:settings/>
+      
+      
+      
+      
+      <con:testStep type="properties" name="Properties" id="8139a192-f294-42ee-b466-29345227b6cb"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>newUser.key</con:name><con:value>2</con:value></con:property><con:property><con:name>newUser.userName</con:name><con:value>simpleuser</con:value></con:property><con:property><con:name>newUser.password</con:name><con:value>simplepass</con:value></con:property><con:property><con:name>app.username</con:name><con:value>adminuser</con:value></con:property><con:property><con:name>app.password</con:name><con:value>adminpass</con:value></con:property><con:property><con:name>test.http.host.rest</con:name><con:value>http://localhost:8080/appdirect</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="httprequest" name="create user" id="ec897cfa-e27f-4c8c-80c7-553c97fa049a">
+        <con:settings/>
+        <con:config method="POST" xsi:type="con:HttpRequest" name="create user" postQueryString="false" mediaType="application/json" downloadIncludedResources="false" id="bea19838-1554-4c1d-9c67-2c770e93523c" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:endpoint>${test.http.host.rest}/user</con:endpoint>
+          <con:request>{
+   "primaryKey": 2,
+   "firstName": "Simple",
+   "lastName": "User",
+   "email": "simple@email.com",
+   "openId": "open_id_simple",
+   "isEnabled": true,
+   "isExpired": false
+}</con:request>
+          
+          
+          <con:assertion type="XPath Match" name="valid firstName returned" id="91ba952a-0fe4-45a4-801e-060835932891"><con:configuration><path>//*:user/*:firstName</path><content>Simple</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="valid userName returned" id="1e3cca9c-5c46-441a-a600-01b88f68297a"><con:configuration><path>//*:user/*:openId</path><content>open_id_simple</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials>
+            <con:username>${app.username}</con:username>
+            <con:password>${app.password}</con:password>
+            <con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:preemptive>true</con:preemptive><con:authType>Preemptive</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:jmsPropertyConfig/>
+          <con:parameters/>
+        </con:config>
+      </con:testStep>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <con:testStep type="transfer" name="transfer key" id="c64534dc-8f17-4d47-a681-21329e761354"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false"><con:name>primaryKey</con:name><con:sourceType>ResponseAsXml</con:sourceType><con:sourceStep>create user</con:sourceStep><con:sourcePath>//*:user/*:primaryKey</con:sourcePath><con:targetType>newUser.key</con:targetType><con:targetStep>Properties</con:targetStep><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="httprequest" name="validate 1" id="bb196839-62ca-469e-a97a-0dc47840819a">
+        <con:settings/>
+        <con:config method="GET" xsi:type="con:HttpRequest" name="validate 1" postQueryString="false" mediaType="application/json" id="6b216477-fd98-401f-a6aa-fd37eef716ef" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:endpoint>${test.http.host.rest}/user/${newUser.key}</con:endpoint>
+          <con:request/>
+          
+          
+          <con:assertion type="XPath Match" name="valid first name returned" id="36959b49-7c4b-403e-9f26-bf92b19b0403"><con:configuration><path>//*:user/*:firstName</path><content>Simple</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="valid openId returned" id="6b56df44-ce22-4b77-ba69-8b4a5ba4b7bc"><con:configuration><path>//*:user/*:openId</path><content>open_id_simple</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="valid primaryKey returned" id="bfc0038a-2e38-49ad-a82e-dc188887bc4e"><con:configuration><path>//*:user/*:primaryKey</path><content>${newUser.key}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials>
+            <con:username>${app.username}</con:username>
+            <con:password>${app.password}</con:password>
+            <con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:preemptive>true</con:preemptive><con:authType>Preemptive</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:jmsPropertyConfig/>
+          <con:parameters/>
+        </con:config>
+      </con:testStep><con:testStep type="httprequest" name="update user" id="e75064e1-429e-4012-92ee-65fa0f0f5d2f">
+        <con:settings/>
+        <con:config method="PUT" xsi:type="con:HttpRequest" name="update user" postQueryString="false" mediaType="application/json" downloadIncludedResources="false" id="f4e40b07-0e4c-43f6-a01c-e1f36b65ddff" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:endpoint>${test.http.host.rest}/user/${newUser.key}</con:endpoint>
+          <con:request>{
+   "primaryKey": "2",
+   "firstName": "Simple_update",
+   "lastName": "User_update",
+   "email": "simple_update@email.com",
+   "openId": "open_id_simple_update",
+   "isEnabled": false,
+   "isExpired": true
+}</con:request>
+          
+          
+          <con:assertion type="XPath Match" name="valid firstName returned" id="31466dcd-c672-49ce-966e-401c9e5f4706"><con:configuration><path>//*:user/*:firstName</path><content>Simple_update</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="valid userName returned" id="04d082ad-76fa-4a01-a639-e4be1cbcf743"><con:configuration><path>//*:user/*:openId</path><content>open_id_simple_update</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="valid primaryKey returned" id="afb26afe-2137-4c7a-8fef-2fe9ba77f56b"><con:configuration><path>//*:user/*:primaryKey</path><content>${newUser.key}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials>
+            <con:username>${app.username}</con:username>
+            <con:password>${app.password}</con:password>
+            <con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:preemptive>true</con:preemptive><con:authType>Preemptive</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:jmsPropertyConfig/>
+          <con:parameters/>
+        </con:config>
+      </con:testStep><con:testStep type="httprequest" name="validate 2" id="0e9f6b8e-3ad6-4037-bf49-4415e6b73bae">
+        <con:settings/>
+        <con:config method="GET" xsi:type="con:HttpRequest" name="validate 2" postQueryString="false" mediaType="application/json" id="6b216477-fd98-401f-a6aa-fd37eef716ef" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:endpoint>${test.http.host.rest}/user/${newUser.key}</con:endpoint>
+          <con:request/>
+          
+          
+          <con:assertion type="XPath Match" name="valid first name returned" id="36959b49-7c4b-403e-9f26-bf92b19b0403"><con:configuration><path>//*:user/*:firstName</path><content>Simple_update</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="valid openId returned" id="6b56df44-ce22-4b77-ba69-8b4a5ba4b7bc"><con:configuration><path>//*:user/*:openId</path><content>open_id_simple_update</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="valid primaryKey returned" id="bfc0038a-2e38-49ad-a82e-dc188887bc4e"><con:configuration><path>//*:user/*:primaryKey</path><content>${newUser.key}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials>
+            <con:username>${app.username}</con:username>
+            <con:password>${app.password}</con:password>
+            <con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:preemptive>true</con:preemptive><con:authType>Preemptive</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:jmsPropertyConfig/>
+          <con:parameters/>
+        </con:config>
+      </con:testStep><con:testStep type="httprequest" name="delete user" id="bbb7079a-b8e8-4628-8a52-69afa551a088">
+        <con:settings/>
+        <con:config method="DELETE" xsi:type="con:HttpRequest" name="delete user" postQueryString="false" mediaType="application/json" downloadIncludedResources="false" id="5ed8b4f5-7fa0-4215-ac94-96086d57a43a" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:endpoint>${test.http.host.rest}/user/${newUser.key}</con:endpoint>
+          <con:request>{
+   "id":"",
+   "name":"updated contact",
+   "address":"updated address",
+   "gender":"F",
+   "dob":"2001-04-16",
+   "email":"updated-test@email.com",
+   "mobile":"5145145111",
+   "phone":"5145145121"
+}</con:request>
+          
+          
+          <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Code returned" id="d4eb63c5-b6e1-4a64-ad19-1366557a21cc"><con:configuration><codes>204</codes></con:configuration></con:assertion><con:credentials>
+            <con:username>${app.username}</con:username>
+            <con:password>${app.password}</con:password>
+            <con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:preemptive>true</con:preemptive><con:authType>Preemptive</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:jmsPropertyConfig/>
+          <con:parameters/>
+        </con:config>
+      </con:testStep><con:testStep type="httprequest" name="validate 3" id="176ab94e-52ea-42c3-aa77-6e05d9f35e87">
+        <con:settings/>
+        <con:config method="GET" xsi:type="con:HttpRequest" name="validate 3" postQueryString="false" mediaType="application/json" id="581758ed-2332-420b-b9fe-146ba66415a8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:endpoint>${test.http.host.rest}/user/${newuser.key}</con:endpoint>
+          <con:request/>
+          
+          
+          <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Code" id="9160aed7-2bdf-48ab-b7df-ce409376852d"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials>
+            <con:username>${app.username}</con:username>
+            <con:password>${app.password}</con:password>
+            <con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:preemptive>true</con:preemptive><con:authType>Preemptive</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:jmsPropertyConfig/>
+          <con:parameters/>
+        </con:config>
+      </con:testStep><con:properties/>
+      <con:reportParameters/>
+      <con:breakPoints>
+        <con:testStepId>16cf45a0-c1af-4c33-8819-0a4ea8276756</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>1342966e-515f-4ec0-9a4c-9d7c51c48542</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>1fb764e4-1840-4cf8-af80-00f7f2c2ece6</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>3b800581-6387-44ff-b35b-945408787b7c</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>edfd8dac-0104-4730-8cc6-0428d656d0ad</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>6a97c497-6e1b-4cef-b11d-07bf8213303c</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>f90e9cac-ab42-46ea-98df-be81bfe12c6a</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>0d0d0e4d-ae89-44ba-8a1f-a351325fb2ac</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>335a9d86-8bef-4093-94b6-f118d2b94d26</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>8cc6b576-1299-4a62-a3cb-02dba18d783c</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>3d446bb9-7f2d-437d-ba9d-538c8544ebca</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>887ed9bf-ef65-4cd6-8d63-fe63059b6114</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>5e49a61f-6c85-495d-9b4a-4cb38df93a4c</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>ff9f7042-ba4f-437e-a043-8021225671b8</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>d76aa335-29eb-4aa2-91cd-16d24dbca2ba</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>679e8216-4253-4db8-8c5d-14aaa0c542fd</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>71a6c31e-5f1d-4b27-b2a7-44b62806bf64</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>5a75c453-48bd-46bc-b1f3-1987ee84ae9b</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>5acde369-b009-4471-a36a-146d0396a252</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>fd95a9ee-7a42-47ac-acef-a96cb56e687c</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>3b97c817-b31a-4a3f-b8ff-409f243cff67</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>e2cdbfdb-8bb7-4def-9ab4-51a9f9aa9b35</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>a461e16f-8295-44f1-8150-5ac5d8413f25</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>8c722f3e-448b-48cb-9417-916e6c71f2a4</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>b5ffe9da-6232-45b2-8878-ff6d59663ebd</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>f9f33afa-18df-4001-b902-af22172b09c9</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>f41cff6a-ef96-412a-88b1-035cd578ec10</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>bf010173-19fa-4baf-b5f4-0aa02758a4ca</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>c9f13830-2d42-4ea7-afff-1a1c3960b124</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+    <con:breakPoints><con:testStepId>18313ee5-9be5-461b-bbef-4ac16dc18a16</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>629d7ffd-2eeb-46e3-bb04-778428631c99</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>c1469165-8392-4ede-ae0c-08bc0ba0118c</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="true" maxResults="0" name="Company CRUD" searchProperties="true" id="9ff29151-773a-4dbd-b424-c9dfec1f535b">
+      <con:settings/>
+      
+      
+      
+      
+      <con:testStep type="properties" name="Properties" id="b40c99d6-7173-4a9f-9d48-8afb26537d02"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>newCompany.key</con:name><con:value>5</con:value></con:property><con:property><con:name>newUser.userName</con:name><con:value>simpleuser</con:value></con:property><con:property><con:name>newUser.password</con:name><con:value>simplepass</con:value></con:property><con:property><con:name>app.username</con:name><con:value>adminuser</con:value></con:property><con:property><con:name>app.password</con:name><con:value>adminpass</con:value></con:property><con:property><con:name>test.http.host.rest</con:name><con:value>http://localhost:8080/appdirect</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="httprequest" name="create company" id="610c922d-cd0c-40b4-b5a4-4a1db7997347">
+        <con:settings/>
+        <con:config method="POST" xsi:type="con:HttpRequest" name="create company" postQueryString="false" mediaType="application/xml" downloadIncludedResources="false" id="bea19838-1554-4c1d-9c67-2c770e93523c" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:endpoint>${test.http.host.rest}/company</con:endpoint>
+          <con:request><![CDATA[<company>
+   <primaryKey></primaryKey>
+   <country>UK</country>
+   <email>rollsroys@email.com</email>
+   <name>Rolls Roys</name>
+   <phoneNumber>444-567-8910</phoneNumber>
+   <uuid>d15bb36e-5fb5-11e0-1111-00262d2cda03</uuid>
+   <website>www.rr.com</website>
+</company>]]></con:request>
+          
+          
+          <con:assertion type="XPath Match" name="valid name returned" id="91ba952a-0fe4-45a4-801e-060835932891"><con:configuration><path>//*:company/*:name</path><content>Rolls Roys</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="valid uuid returned" id="1e3cca9c-5c46-441a-a600-01b88f68297a"><con:configuration><path>//*:company/*:uuid</path><content>d15bb36e-5fb5-11e0-1111-00262d2cda03</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials>
+            <con:username>${app.username}</con:username>
+            <con:password>${app.password}</con:password>
+            <con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:preemptive>true</con:preemptive><con:authType>Preemptive</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:jmsPropertyConfig/>
+          <con:parameters/>
+        </con:config>
+      </con:testStep>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <con:testStep type="transfer" name="transfer key" id="41659cab-1d43-4399-87cf-921a43c2b9b4"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false"><con:name>primaryKey</con:name><con:sourceType>ResponseAsXml</con:sourceType><con:sourceStep>create company</con:sourceStep><con:sourcePath>//*:company/*:primaryKey</con:sourcePath><con:targetType>newCompany.key</con:targetType><con:targetStep>Properties</con:targetStep><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="httprequest" name="validate 1" id="6c63ccba-e5fe-4c99-9ee1-f8aef2fc787b">
+        <con:settings/>
+        <con:config method="GET" xsi:type="con:HttpRequest" name="validate 1" postQueryString="false" mediaType="application/json" id="6b216477-fd98-401f-a6aa-fd37eef716ef" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:endpoint>${test.http.host.rest}/company/${newcompany.key}</con:endpoint>
+          <con:request/>
+          
+          
+          <con:assertion type="XPath Match" name="valid first name returned" id="36959b49-7c4b-403e-9f26-bf92b19b0403"><con:configuration><path>//*:company/*:name</path><content>Rolls Roys</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="valid openId returned" id="6b56df44-ce22-4b77-ba69-8b4a5ba4b7bc"><con:configuration><path>//*:company/*:uuid</path><content>d15bb36e-5fb5-11e0-1111-00262d2cda03</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="valid primaryKey returned" id="bfc0038a-2e38-49ad-a82e-dc188887bc4e"><con:configuration><path>//*:company/*:primaryKey</path><content>${newCompany.key}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials>
+            <con:username>${app.username}</con:username>
+            <con:password>${app.password}</con:password>
+            <con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:preemptive>true</con:preemptive><con:authType>Preemptive</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:jmsPropertyConfig/>
+          <con:parameters/>
+        </con:config>
+      </con:testStep><con:testStep type="httprequest" name="update company" id="136a54c7-c27a-43b4-8959-8d358c2278c7">
+        <con:settings/>
+        <con:config method="PUT" xsi:type="con:HttpRequest" name="update company" postQueryString="false" mediaType="application/json" downloadIncludedResources="false" id="f4e40b07-0e4c-43f6-a01c-e1f36b65ddff" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:endpoint>${test.http.host.rest}/company/${newcompany.key}</con:endpoint>
+          <con:request>{
+   "primaryKey": "${newCompany.key}",
+   "country": "TEST",
+   "email": "company@mail.com",
+   "name": "RR",
+   "phoneNumber": "111-222-3333",
+   "uuid": 1234567890,
+   "website": "test.com"
+}</con:request>
+          
+          
+          <con:assertion type="XPath Match" name="valid name returned" id="31466dcd-c672-49ce-966e-401c9e5f4706"><con:configuration><path>//*:company/*:name</path><content>RR</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="valid uuid returned" id="04d082ad-76fa-4a01-a639-e4be1cbcf743"><con:configuration><path>//*:company/*:uuid</path><content>1234567890</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="valid primaryKey returned" id="afb26afe-2137-4c7a-8fef-2fe9ba77f56b"><con:configuration><path>//*:company/*:primaryKey</path><content>${newCompany.key}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials>
+            <con:username>${app.username}</con:username>
+            <con:password>${app.password}</con:password>
+            <con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:preemptive>true</con:preemptive><con:authType>Preemptive</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:jmsPropertyConfig/>
+          <con:parameters/>
+        </con:config>
+      </con:testStep><con:testStep type="httprequest" name="validate 2" id="d8ab2441-70bf-4997-b02c-80614eb7835b">
+        <con:settings/>
+        <con:config method="GET" xsi:type="con:HttpRequest" name="validate 2" postQueryString="false" mediaType="application/json" id="6b216477-fd98-401f-a6aa-fd37eef716ef" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:endpoint>${test.http.host.rest}/company/${newcompany.key}</con:endpoint>
+          <con:request/>
+          
+          
+          <con:assertion type="XPath Match" name="valid name returned" id="36959b49-7c4b-403e-9f26-bf92b19b0403"><con:configuration><path>//*:company/*:name</path><content>RR</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="valid uuid returned" id="6b56df44-ce22-4b77-ba69-8b4a5ba4b7bc"><con:configuration><path>//*:company/*:uuid</path><content>1234567890</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="valid primaryKey returned" id="bfc0038a-2e38-49ad-a82e-dc188887bc4e"><con:configuration><path>//*:company/*:primaryKey</path><content>${newCompany.key}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials>
+            <con:username>${app.username}</con:username>
+            <con:password>${app.password}</con:password>
+            <con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:preemptive>true</con:preemptive><con:authType>Preemptive</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:jmsPropertyConfig/>
+          <con:parameters/>
+        </con:config>
+      </con:testStep><con:testStep type="httprequest" name="delete user" id="6268b9ff-b662-4bc9-8bc6-57baa3b95cd2">
+        <con:settings/>
+        <con:config method="DELETE" xsi:type="con:HttpRequest" name="delete user" postQueryString="false" mediaType="application/json" downloadIncludedResources="false" id="5ed8b4f5-7fa0-4215-ac94-96086d57a43a" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:endpoint>${test.http.host.rest}/company/${newcompany.key}</con:endpoint>
+          <con:request>{
+   "id":"",
+   "name":"updated contact",
+   "address":"updated address",
+   "gender":"F",
+   "dob":"2001-04-16",
+   "email":"updated-test@email.com",
+   "mobile":"5145145111",
+   "phone":"5145145121"
+}</con:request>
+          
+          
+          <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Code returned" id="d4eb63c5-b6e1-4a64-ad19-1366557a21cc"><con:configuration><codes>204</codes></con:configuration></con:assertion><con:credentials>
+            <con:username>${app.username}</con:username>
+            <con:password>${app.password}</con:password>
+            <con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:preemptive>true</con:preemptive><con:authType>Preemptive</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:jmsPropertyConfig/>
+          <con:parameters/>
+        </con:config>
+      </con:testStep><con:testStep type="httprequest" name="validate 3" id="0f3de18a-060b-4e29-bf6c-db6f92429795">
+        <con:settings/>
+        <con:config method="GET" xsi:type="con:HttpRequest" name="validate 3" postQueryString="false" mediaType="application/json" id="581758ed-2332-420b-b9fe-146ba66415a8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:endpoint>${test.http.host.rest}/company/${newcompany.key}</con:endpoint>
+          <con:request/>
+          
+          
+          <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Code" id="9160aed7-2bdf-48ab-b7df-ce409376852d"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials>
+            <con:username>${app.username}</con:username>
+            <con:password>${app.password}</con:password>
+            <con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:preemptive>true</con:preemptive><con:authType>Preemptive</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:jmsPropertyConfig/>
+          <con:parameters/>
+        </con:config>
+      </con:testStep><con:properties/>
+      <con:reportParameters/>
+      <con:breakPoints>
+        <con:testStepId>16cf45a0-c1af-4c33-8819-0a4ea8276756</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>1342966e-515f-4ec0-9a4c-9d7c51c48542</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>1fb764e4-1840-4cf8-af80-00f7f2c2ece6</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>3b800581-6387-44ff-b35b-945408787b7c</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>edfd8dac-0104-4730-8cc6-0428d656d0ad</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>6a97c497-6e1b-4cef-b11d-07bf8213303c</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>f90e9cac-ab42-46ea-98df-be81bfe12c6a</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>0d0d0e4d-ae89-44ba-8a1f-a351325fb2ac</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>335a9d86-8bef-4093-94b6-f118d2b94d26</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>8cc6b576-1299-4a62-a3cb-02dba18d783c</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>3d446bb9-7f2d-437d-ba9d-538c8544ebca</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>887ed9bf-ef65-4cd6-8d63-fe63059b6114</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>5e49a61f-6c85-495d-9b4a-4cb38df93a4c</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>ff9f7042-ba4f-437e-a043-8021225671b8</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>d76aa335-29eb-4aa2-91cd-16d24dbca2ba</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>679e8216-4253-4db8-8c5d-14aaa0c542fd</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>71a6c31e-5f1d-4b27-b2a7-44b62806bf64</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>5a75c453-48bd-46bc-b1f3-1987ee84ae9b</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>5acde369-b009-4471-a36a-146d0396a252</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>fd95a9ee-7a42-47ac-acef-a96cb56e687c</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>3b97c817-b31a-4a3f-b8ff-409f243cff67</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>e2cdbfdb-8bb7-4def-9ab4-51a9f9aa9b35</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>a461e16f-8295-44f1-8150-5ac5d8413f25</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>8c722f3e-448b-48cb-9417-916e6c71f2a4</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>b5ffe9da-6232-45b2-8878-ff6d59663ebd</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>f9f33afa-18df-4001-b902-af22172b09c9</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>f41cff6a-ef96-412a-88b1-035cd578ec10</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>bf010173-19fa-4baf-b5f4-0aa02758a4ca</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+      <con:breakPoints>
+        <con:testStepId>c9f13830-2d42-4ea7-afff-1a1c3960b124</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+    <con:breakPoints><con:testStepId>18313ee5-9be5-461b-bbef-4ac16dc18a16</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>629d7ffd-2eeb-46e3-bb04-778428631c99</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>c1469165-8392-4ede-ae0c-08bc0ba0118c</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:properties/>
+    <con:reportParameters/>
+  </con:testSuite><con:requirements/>
+  <con:properties/>
+  <con:wssContainer/>
+  <con:databaseConnectionContainer>
+    <con:databaseConnection>
+      <con:name>assignKey</con:name>
+      <con:driver>com.mysql.jdbc.Driver</con:driver>
+      <con:connectionString>jdbc:mysql://ec2-107-21-140-55.compute-1.amazonaws.com:3306/naesta_cleanup?user=sbedb&amp;password=PASS_VALUE</con:connectionString>
+      <con:password>admin@CONTROLGROUP</con:password>
+    </con:databaseConnection>
+  </con:databaseConnectionContainer>
+  <con:oAuth2ProfileContainer/><con:reporting>
+    <con:xmlTemplates/>
+    <con:parameters/>
+  </con:reporting>
+  <con:sensitiveInformation/>
+</con:soapui-project>

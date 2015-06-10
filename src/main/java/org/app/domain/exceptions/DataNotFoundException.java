@@ -4,7 +4,7 @@ import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 
-import org.app.domain.dto.Violation;
+import org.app.domain.model.dto.Violation;
 
 //--------------------------------------------------------------------------------------------------------------------------------
 /** Data not found exception class implementation.

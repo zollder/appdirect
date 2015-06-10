@@ -6,15 +6,12 @@ import org.app.domain.model.User;
 
 //--------------------------------------------------------------------------------------------------
 /** UserService interface.
- *  Declares services related to system user management. */
+ *  Declares available user management services. */
 //--------------------------------------------------------------------------------------------------
 public interface UserService
 {
 	/** Loads {@link User} entity by primary key (id). Throws DataNotFoundException. */
 	public User loadByPrimaryKey(Integer key);
-
-	/** Loads {@link User} entity by userName. */
-	public User loadByUserName(String userName);
 
 	/** Loads given {@link User} entity by openId. */
 	public User loadByOpenId(String openId);

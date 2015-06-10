@@ -3,82 +3,93 @@ package org.app.domain.services.impl;
 import java.util.List;
 
 import org.app.domain.exceptions.DataNotFoundException;
-import org.app.domain.model.User;
-import org.app.domain.services.UserService;
-import org.app.repositories.RoleRepository;
-import org.app.repositories.UserRepository;
+import org.app.domain.model.Company;
+import org.app.domain.services.CompanyService;
+import org.app.repositories.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service("userService")
-public class UserServiceImpl implements UserService
+@Service("companyService")
+public class CompanyServiceImpl implements CompanyService
 {
 	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private RoleRepository roleRepository;
+	private CompanyRepository companyRepository;
 
     // ---------------------------------------------------------------------------------------------
     @Override
 	@Transactional(readOnly = true)
-	public User loadByPrimaryKey(Integer key)
+	public Company loadByPrimaryKey(Integer key)
 	{
-    	User user = userRepository.findOne(key);
-		if (user == null)
+    	Company entity = companyRepository.findOne(key);
+		if (entity == null)
 		{
 			String message = String.format(this.getClass() + " with primary key '%d' not found");
 			throw new DataNotFoundException(message, String.valueOf(key));
 		}
 
-		return user;
+		return entity;
 	}
 
     // ---------------------------------------------------------------------------------------------
     @Override
 	@Transactional(readOnly = true)
-	public User loadByOpenId(String openId)
+	public Company loadByName(String name)
 	{
-    	User user = userRepository.findByOpenId(openId);
-		if (user == null)
+    	Company entity = companyRepository.findByName(name);
+		if (entity == null)
 		{
-			String message = String.format(this.getClass() + " with openId '%s' not found");
-			throw new DataNotFoundException(message, openId);
+			String message = String.format(this.getClass() + " with name '%s' not found");
+			throw new DataNotFoundException(message, name);
 		}
 
-		return user;
+		return entity;
 	}
 
     // ---------------------------------------------------------------------------------------------
     @Override
 	@Transactional(readOnly = true)
-	public List<User> findAll()
+	public Company loadByUuid(String uuid)
 	{
-    	List<User> users = userRepository.findAll();
-		if ((users == null) || users.isEmpty())
+    	Company entity = companyRepository.findByUuid(uuid);
+		if (entity == null)
+		{
+			String message = String.format(this.getClass() + " with UUID '%s' not found");
+			throw new DataNotFoundException(message, uuid);
+		}
+
+		return entity;
+	}
+
+    // ---------------------------------------------------------------------------------------------
+    @Override
+	@Transactional(readOnly = true)
+	public List<Company> findAll()
+	{
+    	List<Company> entity = companyRepository.findAll();
+		if ((entity == null) || entity.isEmpty())
 		{
 			String message = String.format(this.getClass() + "record(s) not found");
 			throw new DataNotFoundException(message);
 		}
 
-		return users;
+		return entity;
 	}
 
     // ---------------------------------------------------------------------------------------------
     @Override
 	@Transactional
-	public User save(User user)
+	public Company save(Company entity)
 	{
-    	return userRepository.save(user);
+    	return companyRepository.save(entity);
 	}
 
     // ---------------------------------------------------------------------------------------------
     @Override
     @Transactional
-    public User update(User user)
+    public Company update(Company entity)
     {
-    	return save(user);
+    	return save(entity);
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -86,9 +97,9 @@ public class UserServiceImpl implements UserService
 	@Transactional
 	public void delete(Integer key)
 	{
-		if (!userRepository.exists(key))
+		if (!companyRepository.exists(key))
 			throw new DataNotFoundException(String.format("entity with key '%d' not found", key));
 
-		userRepository.delete(key);
+		companyRepository.delete(key);
 	}
 }

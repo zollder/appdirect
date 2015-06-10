@@ -6,14 +6,11 @@ import org.springframework.stereotype.Repository;
 
 
 /**
- * Implements Repository for {@link User} objects.
+ * Implements Repository for {@link User} entities.
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>
 {
-	/** Loads given {@link User} by username. */
-	public User findByUsername(String username);
-
 	/** Loads given {@link User} by email. */
 	public User findByEmail(String email);
 
