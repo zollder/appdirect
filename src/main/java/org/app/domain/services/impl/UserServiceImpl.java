@@ -5,7 +5,6 @@ import java.util.List;
 import org.app.domain.exceptions.DataNotFoundException;
 import org.app.domain.model.User;
 import org.app.domain.services.UserService;
-import org.app.repositories.RoleRepository;
 import org.app.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +15,6 @@ public class UserServiceImpl implements UserService
 {
 	@Autowired
 	private UserRepository userRepository;
-
-	@Autowired
-	private RoleRepository roleRepository;
 
     // ---------------------------------------------------------------------------------------------
     @Override

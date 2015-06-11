@@ -26,15 +26,6 @@ public class UserController
 	private UserService userService;
 
 	// ----------------------------------------------------------------------------------------------
-	/** TEST */
-	// ----------------------------------------------------------------------------------------------
-    @RequestMapping("/test")
-    public String index()
-    {
-        return "It works!";
-    }
-
-	// ----------------------------------------------------------------------------------------------
 	/** Retrieves {@link User} resource associated to the given key (JSON). */
 	// ----------------------------------------------------------------------------------------------
 	@RequestMapping(value = "/{key}", method = { RequestMethod.GET })

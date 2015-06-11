@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.app.domain.model.dto.Violation;
+import org.app.domain.dto.Violation;
+
 
 // --------------------------------------------------------------------------------------------------------
 /** Base exception class implementation. */
 // --------------------------------------------------------------------------------------------------------
-
 public class BaseException extends RuntimeException
 {
 	private static final long serialVersionUID = -3737363614162576677L;

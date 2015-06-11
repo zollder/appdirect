@@ -1,4 +1,4 @@
-package org.app.domain.model.dto;
+package org.app.domain.dto;
 
 import java.util.ArrayList;
 import java.util.List;

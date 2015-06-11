@@ -2,7 +2,7 @@ package org.app.domain.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -39,8 +39,8 @@ public class User extends AbstractBase<User>
 	@Column(name="isExpired")
 	private Boolean isExpired;
 
-	@ManyToOne
-	@JoinColumn(name="company")
+	// eagerly fetch props to avoid LazyInit exception while saving/updating Company object
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Company company;
 
 	// --------------------------------------------------------------------------------------------------
@@ -107,6 +107,17 @@ public class User extends AbstractBase<User>
 	public void setIsExpired(Boolean isExpired)
 	{
 		this.isExpired = isExpired;
+	}
+
+	// --------------------------------------------------------------------------------------------------
+	public Company getCompany()
+	{
+		return company;
+	}
+
+	public void setCompany(Company company)
+	{
+		this.company = company;
 	}
 
 	// --------------------------------------------------------------------------------------------------

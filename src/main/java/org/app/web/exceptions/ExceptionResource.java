@@ -8,11 +8,11 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
 import org.apache.log4j.Logger;
+import org.app.domain.dto.Violation;
+import org.app.domain.dto.ViolationList;
 import org.app.domain.exceptions.BaseException;
 import org.app.domain.exceptions.DataNotFoundException;
 import org.app.domain.exceptions.NotModifiedException;
-import org.app.domain.model.dto.Violation;
-import org.app.domain.model.dto.ViolationList;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;

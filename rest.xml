@@ -20,7 +20,7 @@
       
       
       
-      <con:testStep type="properties" name="Properties" id="8139a192-f294-42ee-b466-29345227b6cb"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>newUser.key</con:name><con:value>2</con:value></con:property><con:property><con:name>newUser.userName</con:name><con:value>simpleuser</con:value></con:property><con:property><con:name>newUser.password</con:name><con:value>simplepass</con:value></con:property><con:property><con:name>app.username</con:name><con:value>adminuser</con:value></con:property><con:property><con:name>app.password</con:name><con:value>adminpass</con:value></con:property><con:property><con:name>test.http.host.rest</con:name><con:value>http://localhost:8080/appdirect</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="httprequest" name="create user" id="ec897cfa-e27f-4c8c-80c7-553c97fa049a">
+      <con:testStep type="properties" name="Properties" id="8139a192-f294-42ee-b466-29345227b6cb"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>newUser.key</con:name><con:value>3</con:value></con:property><con:property><con:name>newUser.userName</con:name><con:value>simpleuser</con:value></con:property><con:property><con:name>newUser.password</con:name><con:value>simplepass</con:value></con:property><con:property><con:name>app.username</con:name><con:value>adminuser</con:value></con:property><con:property><con:name>app.password</con:name><con:value>adminpass</con:value></con:property><con:property><con:name>test.http.host.rest</con:name><con:value>http://localhost:8080/appdirect</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="httprequest" name="create user" id="ec897cfa-e27f-4c8c-80c7-553c97fa049a">
         <con:settings/>
         <con:config method="POST" xsi:type="con:HttpRequest" name="create user" postQueryString="false" mediaType="application/json" downloadIncludedResources="false" id="bea19838-1554-4c1d-9c67-2c770e93523c" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
           <con:settings>
@@ -28,13 +28,23 @@
           </con:settings>
           <con:endpoint>${test.http.host.rest}/user</con:endpoint>
           <con:request>{
-   "primaryKey": 2,
-   "firstName": "Simple",
-   "lastName": "User",
-   "email": "simple@email.com",
-   "openId": "open_id_simple",
-   "isEnabled": true,
-   "isExpired": false
+	"primaryKey": 2,
+	"firstName": "Simple",
+	"lastName": "User",
+	"email": "simple@email.com",
+	"openId": "open_id_simple",
+	"isEnabled": true,
+	"isExpired": false,
+	"company":
+	{
+		"primaryKey": "2",
+		"country": "TEST",
+		"email": "company@mail.com",
+		"name": "RR",
+		"phoneNumber": "111-222-3333",
+		"uuid": 1234567890123,
+		"website": "test.com"
+	}
 }</con:request>
           
           
@@ -81,7 +91,7 @@
           <con:settings>
             <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
           </con:settings>
-          <con:endpoint>${test.http.host.rest}/user/${newUser.key}</con:endpoint>
+          <con:endpoint>${test.http.host.rest}/user/${newuser.key}</con:endpoint>
           <con:request/>
           
           

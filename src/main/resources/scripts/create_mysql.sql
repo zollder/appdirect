@@ -1,37 +1,38 @@
 -- Dumping database structure for test
-CREATE SCHEMA IF NOT EXISTS `appdirect`;
+DROP DATABASE IF EXISTS `appdirect`;
+CREATE DATABASE IF NOT EXISTS `appdirect`;
 USE `appdirect`;
 
 -- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 DROP TABLE IF EXISTS `user`;
-CREATE TABLE  `user`
+CREATE TABLE IF NOT EXISTS `user`
 (
-  primaryKey int(10) unsigned NOT NULL AUTO_INCREMENT,
+  primaryKey int NOT NULL AUTO_INCREMENT,
   openId varchar(255) NOT NULL,
   firstName varchar(80) DEFAULT NULL,
   lastName varchar(80) DEFAULT NULL,
   email varchar(255) DEFAULT NULL,
   isEnabled boolean NOT NULL,
   isExpired boolean NOT NULL,
-  PRIMARY KEY (primaryKey)
-);
+  PRIMARY KEY (`primaryKey`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `user`
-VALUES (1,'d9acd48369a1a20280c8c3b6921d8d8a','Admin','User','admin@email.com',1,0);
+VALUES (1,'d9acd48369a1a20280c8c3b6921d8d8a','Admin','User','admin@email.com',1,0,2);
 
 -- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 DROP TABLE IF EXISTS `company`;
-CREATE TABLE  `company`
+CREATE TABLE IF NOT EXISTS `company`
 (
-  primaryKey int(10) unsigned NOT NULL AUTO_INCREMENT,
+  primaryKey int NOT NULL AUTO_INCREMENT,
   country varchar(20) DEFAULT NULL,
   name varchar(255) NOT NULL,
   email varchar(255) DEFAULT NULL,
   phone varchar(40) DEFAULT NULL,
   website varchar(255) DEFAULT NULL,
   uuid varchar(255) NOT NULL,
-  PRIMARY KEY (primaryKey)
-);
+  PRIMARY KEY (`primaryKey`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `company`
 VALUES
