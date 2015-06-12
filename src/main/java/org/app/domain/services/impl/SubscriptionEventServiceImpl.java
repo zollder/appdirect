@@ -10,8 +10,8 @@ import org.app.domain.model.subscriptions.OrderEvent;
 import org.app.domain.services.EventDataService;
 import org.app.domain.services.SubscriptionEventService;
 import org.app.domain.services.UserService;
-import org.app.domain.utils.DtoMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 //--------------------------------------------------------------------------------------------------
@@ -26,8 +26,13 @@ public class SubscriptionEventServiceImpl implements SubscriptionEventService
 	@Autowired
 	private UserService userService;
 
+	// TODO: make sure it's really required
+	@Value("${appdirect.base.url}")
+	private String appDirectBaseUrl;
+
 	private static Logger logger = Logger.getLogger(SubscriptionEventServiceImpl.class);
-    // ---------------------------------------------------------------------------------------------
+
+	// ---------------------------------------------------------------------------------------------
 	@Override
 	public Response createSubscription(String eventUrl)
 	{
@@ -43,7 +48,7 @@ public class SubscriptionEventServiceImpl implements SubscriptionEventService
 			User subscriber = userService.loadByOpenId(orderEvent.getCreator().getOpenId());
 			if (userService.loadByOpenId(orderEvent.getCreator().getOpenId()) == null)
 			{
-				subscriber = DtoMapperUtil.convertToUser(orderEvent.getCreator(), new User());
+				subscriber = eventDataService.mapCreatorToUser(orderEvent.getCreator(), new User());
 				subscriber.setCompany(orderEvent.getPayload().getCompany());
 				User savedSubscriber = userService.save(subscriber);
 				response = Response.success("Account creation successful", savedSubscriber.getAccountId());

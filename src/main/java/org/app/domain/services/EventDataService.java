@@ -1,5 +1,8 @@
 package org.app.domain.services;
 
+import org.app.domain.model.Creator;
+import org.app.domain.model.entities.User;
+
 
 //--------------------------------------------------------------------------------------------------
 /** EventDataService interface.
@@ -11,4 +14,7 @@ public interface EventDataService
 	 *  Parses retrieved event payload and maps it to specified class type.
 	 * @throws Exception */
 	<T> T getEvent(String url, Class<T> resultType) throws Exception;
+
+	/** Maps {@link Creator} fields to {@link User} fields. */
+	public User mapCreatorToUser(Creator creator, User user);
 }

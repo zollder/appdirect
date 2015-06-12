@@ -1,8 +1,8 @@
 package org.app.security;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.app.domain.enums.RoleEnum;
 import org.app.domain.model.entities.User;
@@ -24,7 +24,7 @@ public class SpringUserAdapter implements UserDetails
 	private String openId;
 	private String password;
 	private boolean enabled;
-	private Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+	private List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
 	// --------------------------------------------------------------------------------------------------------------------------------
 	public SpringUserAdapter(User user)

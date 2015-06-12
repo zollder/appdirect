@@ -16,20 +16,18 @@ public class CustomResourceProcessingFilter extends ProtectedResourceProcessingF
 {
     private List<RequestMatcher> requestMatchers;
 
+    // --------------------------------------------------------------------------------------------------
     public CustomResourceProcessingFilter(List<RequestMatcher> requestMatchers)
-    {
-        this.requestMatchers = requestMatchers;
-    }
+    { this.requestMatchers = requestMatchers; }
 
     //--------------------------------------------------------------------------------------------------
     /** Goes through the filter chain trying to find a match.
      *  Returns true if the match is found, false otherwise. */
     //--------------------------------------------------------------------------------------------------
     @Override
-    protected boolean requiresAuthentication(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain) {
-
+    protected boolean requiresAuthentication(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain)
+    {
         boolean matches = false;
-
         if ((requestMatchers != null) && !requestMatchers.isEmpty())
             for (RequestMatcher requestMatcher : requestMatchers)
                 if (requestMatcher.matches(request))

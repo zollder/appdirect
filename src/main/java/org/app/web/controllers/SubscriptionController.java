@@ -7,7 +7,7 @@ import org.app.domain.model.Response;
 import org.app.domain.services.SubscriptionEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth.provider.ConsumerAuthentication;
+import org.springframework.security.openid.OpenIDAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,12 +30,10 @@ public class SubscriptionController
 	@RequestMapping(value = "/create", method = { RequestMethod.GET })
 	@ResponseBody
 
-	public Response processCreateEvent(@RequestParam String eventUrl,
-									   @RequestParam String token,
-									   @AuthenticationPrincipal ConsumerAuthentication authentication)
+	public Response processCreateEvent(@RequestParam String eventUrl, @AuthenticationPrincipal OpenIDAuthenticationToken authentication)
 	{
-		logger.debug(String.format("URL: %s, OAuth token: %s, authentication: %s", eventUrl, token, authentication));
-		Response response = this.validateRequestParams(eventUrl, token, authentication);
+		logger.debug(String.format("URL: %s, Authentication: %", eventUrl, authentication));
+		Response response = this.validateRequestParams(eventUrl, authentication);
 
 		if (response != null)
 			response = eventService.createSubscription(eventUrl);
@@ -48,32 +46,24 @@ public class SubscriptionController
 	 *  Builds and returns a {@link Response} if an issue or debug scenario is encountered.
 	 *  Returns null otherwise. */
 	// ----------------------------------------------------------------------------------------------
-	private Response validateRequestParams(String url, String token, ConsumerAuthentication authentication)
+	private Response validateRequestParams(String url, OpenIDAuthenticationToken authentication)
 	{
 		Response response = null;
-		if (StringUtils.isBlank(url) || StringUtils.isBlank(token))
+		if (StringUtils.isBlank(url) || StringUtils.isBlank(StringUtils.substringAfterLast(url, "/")))
 		{
-			response = new Response();
-			response.setErrorCode(ErrorCodeEnum.INVALID_RESPONSE.name());
-			response.setMessage("Invalid url and/or token");
-			response.setSuccess(false);
+			response = Response.failure(ErrorCodeEnum.INVALID_RESPONSE.name(), "Invalid url and/or token");
+			return response;
+		}
+
+		if (StringUtils.contains(url, "dummy"))
+		{
+			response = Response.success("It works!", url);
 			return response;
 		}
 
 		if ((authentication == null) || !authentication.isAuthenticated())
 		{
-			response = new Response();
-			response.setErrorCode(ErrorCodeEnum.UNAUTHORIZED.name());
-			response.setMessage("Unauthorized request.");
-			response.setSuccess(false);
-			return response;
-		}
-
-		if (StringUtils.contains(token, "dummy"))
-		{
-			response = new Response();
-			response.setMessage("It works!");
-			response.setSuccess(true);
+			response = Response.failure(ErrorCodeEnum.UNAUTHORIZED.name(), "Authentication failed for some reason");
 			return response;
 		}
 
