@@ -3,7 +3,7 @@ package org.app.web.controllers;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.app.domain.model.User;
+import org.app.domain.model.entities.User;
 import org.app.domain.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

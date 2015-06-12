@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.app.domain.enums.RoleEnum;
-import org.app.domain.model.User;
+import org.app.domain.model.entities.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

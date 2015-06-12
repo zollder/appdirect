@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `user`
   firstName varchar(80) DEFAULT NULL,
   lastName varchar(80) DEFAULT NULL,
   email varchar(255) DEFAULT NULL,
+  accountId varchar(255) NOT NULL,
   isEnabled boolean NOT NULL,
   isExpired boolean NOT NULL,
   PRIMARY KEY (`primaryKey`)

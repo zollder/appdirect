@@ -1,6 +1,6 @@
 package org.app.security;
 
-import org.app.domain.model.User;
+import org.app.domain.model.entities.User;
 import org.app.domain.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;

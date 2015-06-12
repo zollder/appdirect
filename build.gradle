@@ -38,6 +38,8 @@ war.archiveName "appdirect.war"
 		'mysql:mysql-connector-java:5.1.35'
 		tomcatVersion = '7.0.59'
 		openIdVersion = '1.0.0'
+		appacheCommonsVersion = '3.0'
+		oauthSignpostVersion = '1.2.1.2'
 	}
 
 	// required to deploy to embedded tomcat (optional, use tomcatRunWar to start and deploy)
@@ -62,6 +64,7 @@ war.archiveName "appdirect.war"
 	    compile	"commons-collections:commons-collections:$commonsVersion",
 	    		"ch.qos.logback:logback-classic:$logbackVersion",
 	    		"log4j:log4j:$log4jVersion",
+	    		"org.apache.commons:commons-lang3:$appacheCommonsVersion",
 
 	    		"javax.servlet:javax.servlet-api:$javaxServletVersion",
 	    		"javax.validation:validation-api:$javaxValidationVersion",
@@ -85,7 +88,8 @@ war.archiveName "appdirect.war"
 				"org.springframework.security:spring-security-openid:$springSecurityVersion",
 				"org.springframework.security.oauth:spring-security-oauth:$springOauthVersion",
 
-				"org.openid4java:openid4java:$openIdVersion"
+				"org.openid4java:openid4java:$openIdVersion",
+				"oauth.signpost:signpost-core:$oauthSignpostVersion"
 	}
 
 	test { systemProperties 'property': 'value' }

@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import oauth.signpost.OAuthConsumer;
+import oauth.signpost.basic.DefaultOAuthConsumer;
+
 import org.app.security.CustomResourceProcessingFilter;
 import org.app.security.OpenIdUserSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +49,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter
     {
         http.csrf().disable();
 
-        http.authorizeRequests().antMatchers("/appdirect/**").permitAll().anyRequest().authenticated();
+        http.authorizeRequests().antMatchers("/subscription/**").permitAll().anyRequest().authenticated();
         http
         	.authorizeRequests()
     			.antMatchers("/login/", "/openid").permitAll()
@@ -71,7 +74,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter
     OAuthProviderProcessingFilter oAuthProviderProcessingFilter()
     {
         List<RequestMatcher> requestMatchers = new ArrayList<>();
-        requestMatchers.add(new AntPathRequestMatcher("/appdirect/**"));
+        requestMatchers.add(new AntPathRequestMatcher("/subscription/**"));
         ProtectedResourceProcessingFilter filter = new CustomResourceProcessingFilter(requestMatchers);
 
         filter.setConsumerDetailsService(consumerDetailsService());
@@ -102,5 +105,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter
     public OAuthProviderTokenServices providerTokenServices()
     {
         return new InMemoryProviderTokenServices();
+    }
+
+    @Bean
+    public OAuthConsumer oAuthConsumer()
+    {
+    	return new DefaultOAuthConsumer(env.getProperty("oauth.consumer.key"), env.getProperty("oauth.consumer.secret"));
     }
 }

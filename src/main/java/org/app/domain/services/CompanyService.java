@@ -2,7 +2,7 @@ package org.app.domain.services;
 
 import java.util.List;
 
-import org.app.domain.model.Company;
+import org.app.domain.model.entities.Company;
 
 //--------------------------------------------------------------------------------------------------
 /** CompanyService interface.

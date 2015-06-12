@@ -1,9 +1,14 @@
 package org.app.domain.services.impl;
 
 import java.util.List;
+import java.util.UUID;
 
+import javax.persistence.EntityExistsException;
+
+import org.app.domain.enums.AccountStatusEnum;
 import org.app.domain.exceptions.DataNotFoundException;
-import org.app.domain.model.User;
+import org.app.domain.model.Account;
+import org.app.domain.model.entities.User;
 import org.app.domain.services.UserService;
 import org.app.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +28,7 @@ public class UserServiceImpl implements UserService
 	{
     	User user = userRepository.findOne(key);
 		if (user == null)
-		{
-			String message = String.format(this.getClass() + " with primary key '%d' not found");
-			throw new DataNotFoundException(message, String.valueOf(key));
-		}
+			throw new DataNotFoundException(String.format(this.getClass() + " with primary key '%d' not found"), String.valueOf(key));
 
 		return user;
 	}
@@ -38,10 +40,19 @@ public class UserServiceImpl implements UserService
 	{
     	User user = userRepository.findByOpenId(openId);
 		if (user == null)
-		{
-			String message = String.format(this.getClass() + " with openId '%s' not found");
-			throw new DataNotFoundException(message, openId);
-		}
+			throw new DataNotFoundException(String.format(this.getClass() + " with openId '%s' not found"), openId);
+
+		return user;
+	}
+
+    // ---------------------------------------------------------------------------------------------
+    @Override
+	@Transactional(readOnly = true)
+	public User loadByAccountId(String accountId)
+	{
+    	User user = userRepository.findByAccountId(accountId);
+		if (user == null)
+			throw new DataNotFoundException(String.format(this.getClass() + " with accountId '%s' not found"), accountId);
 
 		return user;
 	}
@@ -53,10 +64,7 @@ public class UserServiceImpl implements UserService
 	{
     	List<User> users = userRepository.findAll();
 		if ((users == null) || users.isEmpty())
-		{
-			String message = String.format(this.getClass() + "record(s) not found");
-			throw new DataNotFoundException(message);
-		}
+			throw new DataNotFoundException(String.format(this.getClass() + "record(s) not found"));
 
 		return users;
 	}
@@ -64,8 +72,14 @@ public class UserServiceImpl implements UserService
     // ---------------------------------------------------------------------------------------------
     @Override
 	@Transactional
-	public User save(User user)
+	public User save(User user) throws EntityExistsException
 	{
+    	if (userRepository.findByOpenId(user.getOpenId()) != null)
+    		throw new EntityExistsException("User already exists.");
+
+    	// generate account ID
+    	user.setAccountId(UUID.randomUUID().toString());
+
     	return userRepository.save(user);
 	}
 
@@ -74,7 +88,7 @@ public class UserServiceImpl implements UserService
     @Transactional
     public User update(User user)
     {
-    	return save(user);
+    	return userRepository.save(user);
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -86,5 +100,21 @@ public class UserServiceImpl implements UserService
 			throw new DataNotFoundException(String.format("entity with key '%d' not found", key));
 
 		userRepository.delete(key);
+	}
+
+	// ---------------------------------------------------------------------------------------------
+	@Override
+	public Account getUserAccount(Integer key)
+	{
+		if (!userRepository.exists(key))
+			throw new DataNotFoundException(String.format("entity with key '%d' not found", key));
+
+		User entity = userRepository.findOne(key);
+
+		Account userAccount = new Account();
+		userAccount.setAccountId(entity.getAccountId());
+		userAccount.setStatus(AccountStatusEnum.ACTIVE);
+
+		return userAccount;
 	}
 }

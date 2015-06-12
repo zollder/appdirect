@@ -2,6 +2,8 @@ package org.app.domain.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.app.domain.model.entities.Company;
+
 @XmlRootElement
 public class Payload
 {
@@ -9,14 +11,12 @@ public class Payload
 	private Company company;	// 'create' events only
 	private Order order;		// 'create' and 'change' events only
 	private Notice notice;		// 'status' events only
-	private User user;			// 'user_assisg' and 'user_unassign' events only
 
 	// --------------------------------------------------------------------------------------------------
 	public Payload() {}
 
-	public Payload(Account account, Company company, Order order, Notice notice, User user)
+	public Payload(Account account, Company company, Order order, Notice notice)
 	{
-		this.user = user;
 		this.notice = notice;
 		this.order = order;
 		this.company = company;
@@ -62,15 +62,5 @@ public class Payload
 	public void setNotice(Notice notice)
 	{
 		this.notice = notice;
-	}
-
-	public User getUser()
-	{
-		return user;
-	}
-
-	public void setUser(User user)
-	{
-		this.user = user;
 	}
 }

@@ -6,34 +6,31 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Response
 {
 	private Boolean success;
-	private String errorCode;
 	private String message;
+	private String accountIdentifier;
+	private String errorCode;
 
 	// --------------------------------------------------------------------------------------------------
 	public Response()
 	{}
 
-	public Response (Boolean success, String message, String errorCode)
+	public Response(Boolean success, String error, String message, String accountId)
 	{
-		this.errorCode = errorCode;
+		this.accountIdentifier = accountId;
 		this.message = message;
 		this.success = success;
+		this.errorCode = error;
 	}
 
 	// --------------------------------------------------------------------------------------------------
-	public static Response success()
+	public static Response success(String message, String accountId)
 	{
-		return new Response(true, null, null);
-	}
-
-	public static Response success(String message)
-	{
-		return new Response(true, message, null);
+		return new Response(true, null, message, accountId);
 	}
 
 	public static Response failure(String error, String message)
 	{
-		return new Response(false, message, error);
+		return new Response(false, error, message, null);
 	}
 
 	// --------------------------------------------------------------------------------------------------
@@ -47,14 +44,14 @@ public class Response
 		this.success = success;
 	}
 
-	public String getErrorCode()
+	public String getAccounIdentifier()
 	{
-		return errorCode;
+		return accountIdentifier;
 	}
 
-	public void setErrorCode(String errorCode)
+	public void setAccounIdentifier(String accountId)
 	{
-		this.errorCode = errorCode;
+		this.accountIdentifier = accountId;
 	}
 
 	public String getMessage()
@@ -65,5 +62,15 @@ public class Response
 	public void setMessage(String message)
 	{
 		this.message = message;
+	}
+
+	public String getErrorCode()
+	{
+		return errorCode;
+	}
+
+	public void setErrorCode(String errorCode)
+	{
+		this.errorCode = errorCode;
 	}
 }

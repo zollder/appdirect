@@ -1,4 +1,4 @@
-package org.app.domain.model;
+package org.app.domain.model.entities;
 
 import java.io.Serializable;
 
@@ -10,9 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 //-------------------------------------------------------------------------------------------------------
-/** Abstract base class for entities. */
+/** Abstract entity base class. */
 //-------------------------------------------------------------------------------------------------------
-
 @MappedSuperclass
 public abstract class AbstractBase<T> implements Serializable
 {

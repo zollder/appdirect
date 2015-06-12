@@ -1,8 +1,9 @@
-package org.app.domain.model;
+package org.app.domain.model.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -10,9 +11,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 // --------------------------------------------------------------------------------------------------
-/** User bean. */
+/** User entity. */
 // --------------------------------------------------------------------------------------------------
-
 @Entity
 @Table(name="user")
 @XmlRootElement
@@ -33,14 +33,18 @@ public class User extends AbstractBase<User>
 	@Column(name="email", unique = true)
 	private String email;
 
+	@Column(name="accountId")
+	private String accountId;
+
 	@Column(name="isEnabled")
-	private Boolean isEnabled;
+	private Boolean isEnabled = Boolean.TRUE;
 
 	@Column(name="isExpired")
-	private Boolean isExpired;
+	private Boolean isExpired = Boolean.FALSE;
 
 	// eagerly fetch props to avoid LazyInit exception while saving/updating Company object
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "company_id")
 	private Company company;
 
 	// --------------------------------------------------------------------------------------------------
@@ -85,6 +89,17 @@ public class User extends AbstractBase<User>
 	public void setEmail(String email)
 	{
 		this.email = email;
+	}
+
+	// --------------------------------------------------------------------------------------------------
+	public String getAccountId()
+	{
+		return accountId;
+	}
+
+	public void setAccountId(String accountId)
+	{
+		this.accountId = accountId;
 	}
 
 	// --------------------------------------------------------------------------------------------------
@@ -134,6 +149,8 @@ public class User extends AbstractBase<User>
 		builder.append(email);
 		builder.append(", openId=");
 		builder.append(openId);
+		builder.append(", accountId=");
+		builder.append(accountId);
 		builder.append(", isEnabled=");
 		builder.append(isEnabled);
 		builder.append(", isExpired=");

@@ -3,7 +3,7 @@ package org.app.domain.services.impl;
 import java.util.List;
 
 import org.app.domain.exceptions.DataNotFoundException;
-import org.app.domain.model.Company;
+import org.app.domain.model.entities.Company;
 import org.app.domain.services.CompanyService;
 import org.app.repositories.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
