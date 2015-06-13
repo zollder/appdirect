@@ -5,9 +5,7 @@ import java.util.UUID;
 
 import javax.persistence.EntityExistsException;
 
-import org.app.domain.enums.AccountStatusEnum;
 import org.app.domain.exceptions.DataNotFoundException;
-import org.app.domain.model.Account;
 import org.app.domain.model.entities.User;
 import org.app.domain.services.UserService;
 import org.app.repositories.UserRepository;
@@ -28,7 +26,7 @@ public class UserServiceImpl implements UserService
 	{
     	User user = userRepository.findOne(key);
 		if (user == null)
-			throw new DataNotFoundException(String.format(this.getClass() + " with primary key '%d' not found"), String.valueOf(key));
+			throw new DataNotFoundException("User not found, key: " + String.valueOf(key));
 
 		return user;
 	}
@@ -40,7 +38,7 @@ public class UserServiceImpl implements UserService
 	{
     	User user = userRepository.findByOpenId(openId);
 		if (user == null)
-			throw new DataNotFoundException(String.format(this.getClass() + " with openId '%s' not found"), openId);
+			throw new DataNotFoundException("User not found, openId: " + openId);
 
 		return user;
 	}
@@ -52,7 +50,7 @@ public class UserServiceImpl implements UserService
 	{
     	User user = userRepository.findByAccountId(accountId);
 		if (user == null)
-			throw new DataNotFoundException(String.format(this.getClass() + " with accountId '%s' not found"), accountId);
+			throw new DataNotFoundException("User not found, accountId: " + accountId);
 
 		return user;
 	}
@@ -97,24 +95,8 @@ public class UserServiceImpl implements UserService
 	public void delete(Integer key)
 	{
 		if (!userRepository.exists(key))
-			throw new DataNotFoundException(String.format("entity with key '%d' not found", key));
+			throw new DataNotFoundException(String.format("User not found, key: " + String.valueOf(key)));
 
 		userRepository.delete(key);
-	}
-
-	// ---------------------------------------------------------------------------------------------
-	@Override
-	public Account getUserAccount(Integer key)
-	{
-		if (!userRepository.exists(key))
-			throw new DataNotFoundException(String.format("entity with key '%d' not found", key));
-
-		User entity = userRepository.findOne(key);
-
-		Account userAccount = new Account();
-		userAccount.setAccountId(entity.getAccountId());
-		userAccount.setStatus(AccountStatusEnum.ACTIVE);
-
-		return userAccount;
 	}
 }

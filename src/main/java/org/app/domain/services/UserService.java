@@ -2,7 +2,6 @@ package org.app.domain.services;
 
 import java.util.List;
 
-import org.app.domain.model.Account;
 import org.app.domain.model.entities.User;
 
 
@@ -32,7 +31,4 @@ public interface UserService
 
 	/** Deletes {@link User} entity by specified primary key. */
 	public void delete(Integer key);
-
-	/** returns {@link Account} by specified {@link User} primary key. */
-	public Account getUserAccount(Integer key);
 }

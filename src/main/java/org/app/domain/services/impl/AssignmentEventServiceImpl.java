@@ -14,7 +14,6 @@ public class AssignmentEventServiceImpl implements AssignmentEventService
 
 
     // ---------------------------------------------------------------------------------------------
-
 	@Override
 	public Response assign(String event)
 	{
@@ -22,6 +21,7 @@ public class AssignmentEventServiceImpl implements AssignmentEventService
 		return null;
 	}
 
+	// ---------------------------------------------------------------------------------------------
 	@Override
 	public Response unassign(String event)
 	{

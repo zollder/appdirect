@@ -23,10 +23,7 @@ public class CompanyServiceImpl implements CompanyService
 	{
     	Company entity = companyRepository.findOne(key);
 		if (entity == null)
-		{
-			String message = String.format(this.getClass() + " with primary key '%d' not found");
-			throw new DataNotFoundException(message, String.valueOf(key));
-		}
+			throw new DataNotFoundException("Company not found with key:" + String.valueOf(key));
 
 		return entity;
 	}
@@ -38,10 +35,7 @@ public class CompanyServiceImpl implements CompanyService
 	{
     	Company entity = companyRepository.findByName(name);
 		if (entity == null)
-		{
-			String message = String.format(this.getClass() + " with name '%s' not found");
-			throw new DataNotFoundException(message, name);
-		}
+			throw new DataNotFoundException("Company not found with name:" + name);
 
 		return entity;
 	}
@@ -53,10 +47,7 @@ public class CompanyServiceImpl implements CompanyService
 	{
     	Company entity = companyRepository.findByUuid(uuid);
 		if (entity == null)
-		{
-			String message = String.format(this.getClass() + " with UUID '%s' not found");
-			throw new DataNotFoundException(message, uuid);
-		}
+			throw new DataNotFoundException("Company not found with UUID:" + uuid);
 
 		return entity;
 	}
@@ -69,7 +60,7 @@ public class CompanyServiceImpl implements CompanyService
     	List<Company> entity = companyRepository.findAll();
 		if ((entity == null) || entity.isEmpty())
 		{
-			String message = String.format(this.getClass() + "record(s) not found");
+			String message = String.format("Company record(s) not found");
 			throw new DataNotFoundException(message);
 		}
 
@@ -98,7 +89,7 @@ public class CompanyServiceImpl implements CompanyService
 	public void delete(Integer key)
 	{
 		if (!companyRepository.exists(key))
-			throw new DataNotFoundException(String.format("entity with key '%d' not found", key));
+			throw new DataNotFoundException("Company not found with key:" + String.valueOf(key));
 
 		companyRepository.delete(key);
 	}

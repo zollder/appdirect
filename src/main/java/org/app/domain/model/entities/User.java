@@ -3,7 +3,6 @@ package org.app.domain.model.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -44,7 +43,6 @@ public class User extends AbstractBase<User>
 
 	// eagerly fetch props to avoid LazyInit exception while saving/updating Company object
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "company_id")
 	private Company company;
 
 	// --------------------------------------------------------------------------------------------------

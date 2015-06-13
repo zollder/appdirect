@@ -8,6 +8,7 @@ public class Marketplace
 	private String baseUrl;
 	private String partner;
 
+	// --------------------------------------------------------------------------------------------------
 	public Marketplace() {}
 
 	public Marketplace (String partner, String baseUrl)
@@ -16,19 +17,24 @@ public class Marketplace
 		this.partner = partner;
 	}
 
-	public String getBaseUrl(){
+	// --------------------------------------------------------------------------------------------------
+	public String getBaseUrl()
+	{
 		return baseUrl;
 	}
 
-	public void setBaseUrl(String baseUrl){
+	public void setBaseUrl(String baseUrl)
+	{
 		this.baseUrl = baseUrl;
 	}
 
-	public String getPartner(){
+	public String getPartner()
+	{
 		return partner;
 	}
 
-	public void setPartner(String partner){
+	public void setPartner(String partner)
+	{
 		this.partner = partner;
 	}
 }

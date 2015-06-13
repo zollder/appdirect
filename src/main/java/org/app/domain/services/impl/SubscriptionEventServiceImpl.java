@@ -11,7 +11,6 @@ import org.app.domain.services.EventDataService;
 import org.app.domain.services.SubscriptionEventService;
 import org.app.domain.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 //--------------------------------------------------------------------------------------------------
@@ -26,10 +25,6 @@ public class SubscriptionEventServiceImpl implements SubscriptionEventService
 	@Autowired
 	private UserService userService;
 
-	// TODO: make sure it's really required
-	@Value("${appdirect.base.url}")
-	private String appDirectBaseUrl;
-
 	private static Logger logger = Logger.getLogger(SubscriptionEventServiceImpl.class);
 
 	// ---------------------------------------------------------------------------------------------
@@ -41,10 +36,7 @@ public class SubscriptionEventServiceImpl implements SubscriptionEventService
 		Response response = null;
 		try
 		{
-			// retrieve and parse subscription event
 			OrderEvent orderEvent = eventDataService.getEvent(eventUrl, OrderEvent.class);
-
-			// try to create subscriber account
 			User subscriber = userService.loadByOpenId(orderEvent.getCreator().getOpenId());
 			if (userService.loadByOpenId(orderEvent.getCreator().getOpenId()) == null)
 			{

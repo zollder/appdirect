@@ -6,16 +6,16 @@ import org.app.domain.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.openid.OpenIDAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 //--------------------------------------------------------------------------------------------------------------------------------
 /** User Security service. Used by Spring Security to load UserDetails object by openId. */
 //--------------------------------------------------------------------------------------------------------------------------------
 @Service("openIdUserSecurityService")
-public class OpenIdUserSecurityService implements UserDetailsService, AuthenticationUserDetailsService<OpenIDAuthenticationToken>
+public class OpenIdUserSecurityService implements AuthenticationUserDetailsService<OpenIDAuthenticationToken>
 {
 	@Autowired
 	UserService userService;
@@ -30,18 +30,12 @@ public class OpenIdUserSecurityService implements UserDetailsService, Authentica
 	 *  @return spring-adapted UserDetails object or throws UsernameNotFoundException */
 	// --------------------------------------------------------------------------------------------------------------------------------
 	@Override
+	@Transactional(readOnly = true)
 	public UserDetails loadUserDetails(OpenIDAuthenticationToken token) throws UsernameNotFoundException
 	{
-		String openId = (String) token.getPrincipal();
+		String openId = token.getIdentityUrl();
 		logger.debug(String.format("OpenId from token: %s", openId));
 
-		return this.loadUserByUsername(openId);
-	}
-
-	// --------------------------------------------------------------------------------------------------------------------------------
-	@Override
-	public UserDetails loadUserByUsername(String openId) throws UsernameNotFoundException
-	{
 		// load user from the database by openId
 		User user = userService.loadByOpenId(openId);
 		if (user == null)

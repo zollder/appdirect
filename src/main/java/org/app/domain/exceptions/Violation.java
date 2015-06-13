@@ -1,4 +1,4 @@
-package org.app.domain.dto;
+package org.app.domain.exceptions;
 
 import java.io.Serializable;
 
@@ -19,12 +19,7 @@ public class Violation implements Serializable
 
 	private String extendedInfo;
 
-	@NotNull
-	private String messageKey;
-
 	private Long primaryKey;
-
-	private int version;
 
 	private String message;
 
@@ -48,10 +43,10 @@ public class Violation implements Serializable
 		this.setProperty(property);
 	}
 
-	public Violation(String entity, String property, String messageKey)
+	public Violation(String entity, String property, String extendedInfo)
 	{
 		this(entity, property);
-		this.setMessageKey(messageKey);
+		this.setExtendedInfo(extendedInfo);
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------------------
@@ -61,7 +56,7 @@ public class Violation implements Serializable
 
 		entity = source.getRootBeanClass().getName();
 		property = source.getPropertyPath() == null ? null : source.getPropertyPath().toString();
-		messageKey = source.getMessageTemplate();
+		extendedInfo = source.getMessageTemplate();
 		message = source.getMessage();
 	}
 
@@ -69,7 +64,7 @@ public class Violation implements Serializable
 	@Override
 	public String toString()
 	{
-		return "Entity: " + entity + (property == null ? "" : ", Property: " + property) + ", MessageKey: " + messageKey + ", Message: " + message;
+		return "Entity: " + entity + (property == null ? "" : ", Property: " + property) + ", ExtendedInfo: " + extendedInfo + ", Message: " + message;
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------------------
@@ -94,30 +89,6 @@ public class Violation implements Serializable
 	public void setProperty(String property)
 	{
 		this.property = property;
-	}
-
-	// --------------------------------------------------------------------------------------------------------------------------------
-	public String getMessageKey()
-	{
-		return messageKey;
-	}
-
-	// --------------------------------------------------------------------------------------------------------------------------------
-	public void setMessageKey(String messageKey)
-	{
-		this.messageKey = messageKey;
-	}
-
-	// --------------------------------------------------------------------------------------------------------------------------------
-	public int getVersion()
-	{
-		return version;
-	}
-
-	// --------------------------------------------------------------------------------------------------------------------------------
-	public void setVersion(int version)
-	{
-		this.version = version;
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------------------

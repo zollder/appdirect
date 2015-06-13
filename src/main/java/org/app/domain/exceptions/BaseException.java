@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.app.domain.dto.Violation;
-
-
 // --------------------------------------------------------------------------------------------------------
 /** Base exception class implementation. */
 // --------------------------------------------------------------------------------------------------------
@@ -51,11 +48,10 @@ public class BaseException extends RuntimeException
 	// --------------------------------------------------------------------------------------------------------
 	/** Constructor with message */
 	// --------------------------------------------------------------------------------------------------------
-	public BaseException(String message, Throwable cause, String violationMessageKey, Object...  arguments)
+	public BaseException(String message, Throwable cause, Object...  arguments)
 	{
 		this(message, cause);
 		Violation violation = new Violation();
-		violation.setMessageKey(violationMessageKey);
 		violation.setArguments(arguments);
 		violations.add(violation);
 	}

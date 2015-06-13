@@ -11,10 +11,10 @@ public class Order
 	private Collection<Item> items;
 
 	// --------------------------------------------------------------------------------------------------
-	public Order ()
+	public Order()
 	{}
 
-	public Order (String code, Collection<Item> itemsList)
+	public Order(String code, Collection<Item> itemsList)
 	{
 		this.setEditionCode(code);
 		this.setItems(itemsList);

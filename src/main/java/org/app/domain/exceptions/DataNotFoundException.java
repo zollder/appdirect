@@ -4,8 +4,6 @@ import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 
-import org.app.domain.dto.Violation;
-
 //--------------------------------------------------------------------------------------------------------------------------------
 /** Data not found exception class implementation.
  *  To be used when a data retrieval fails because the requested information doesn't exist. */

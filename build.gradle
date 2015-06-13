@@ -14,7 +14,6 @@ war.archiveName "appdirect.war"
 	    version =  version
 	}
 	
-	
 	repositories {
 	    mavenCentral()
 	}
@@ -24,7 +23,6 @@ war.archiveName "appdirect.war"
 		logbackVersion = '1.1.2'
 		log4jVersion = '1.2.17'
 		commonsVersion = '3.2'
-		//h2version = '1.4.186'
 		javaxServletVersion = '3.1.0'
 		springVersion = '4.1.5.RELEASE'
 		springSecurityVersion = '4.0.1.RELEASE'
@@ -35,7 +33,6 @@ war.archiveName "appdirect.war"
 		hibernateVersion = '4.3.10.Final'
 		hibernateValidatorVersion = '5.1.3.Final'
 		mysqlConnectorVersion = '5.1.35'
-		'mysql:mysql-connector-java:5.1.35'
 		tomcatVersion = '7.0.59'
 		openIdVersion = '1.0.0'
 		appacheCommonsVersion = '3.0'
@@ -73,7 +70,6 @@ war.archiveName "appdirect.war"
 	    		"com.fasterxml.jackson.core:jackson-databind:$fasterXmlJacksonVersion",
 	    		"com.fasterxml.jackson.core:jackson-annotations:$fasterXmlJacksonVersion",
 	    		
-	    		// "com.h2database:h2:$h2version",
 	    		"mysql:mysql-connector-java:$mysqlConnectorVersion",
 				"org.springframework.data:spring-data-jpa:$springDataVersion",
 	    		"org.hibernate:hibernate-entitymanager:$hibernateVersion",

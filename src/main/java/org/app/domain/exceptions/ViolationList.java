@@ -1,4 +1,4 @@
-package org.app.domain.dto;
+package org.app.domain.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;
