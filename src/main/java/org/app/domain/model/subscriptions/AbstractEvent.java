@@ -17,6 +17,7 @@ public abstract class AbstractEvent implements Serializable
 	private Marketplace marketplace;
 	private EventTypeEnum type;
 	private String url;
+	private String flag;
 
 	// --------------------------------------------------------------------------------------------------
 	public AbstractEvent(EventTypeEnum eventType)
@@ -63,5 +64,15 @@ public abstract class AbstractEvent implements Serializable
 	public void setType(EventTypeEnum eventType)
 	{
 		this.type = eventType;
+	}
+
+	public String getFlag()
+	{
+		return flag;
+	}
+
+	public void setFlag(String flag)
+	{
+		this.flag = flag;
 	}
 }

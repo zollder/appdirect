@@ -35,6 +35,10 @@
 	<logger name="com.blog">
         <level value="debug" />
     </logger>
+    
+    <logger name="org.springframework.web.client">
+        <level value="debug" />
+    </logger>
 
 
     <!-- Root Logger -->

@@ -43,6 +43,18 @@ public class Company extends AbstractBase<Company>
 	@Column(name="uuid", unique = true)
 	private String uuid;
 
+	// --------------------------------------------------------------------------------------------------
+	public Company() {}
+
+	public Company(String country, String name, String email, String phone, String website, String uuid)
+	{
+		this.country = country;
+		this.name = name;
+		this.email = email;
+		this.phoneNumber = phone;
+		this.website = website;
+		this.uuid = uuid;
+	}
 
 	// --------------------------------------------------------------------------------------------------
 	public String getCountry()

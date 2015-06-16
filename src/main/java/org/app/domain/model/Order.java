@@ -1,23 +1,21 @@
 package org.app.domain.model;
 
-import java.util.Collection;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Order
 {
 	private String editionCode;
-	private Collection<Item> items;
+	private String pricingDuration;
 
 	// --------------------------------------------------------------------------------------------------
 	public Order()
 	{}
 
-	public Order(String code, Collection<Item> itemsList)
+	public Order(String code, String duration)
 	{
 		this.setEditionCode(code);
-		this.setItems(itemsList);
+		this.setPricingDuration(duration);
 	}
 
 	// --------------------------------------------------------------------------------------------------
@@ -31,13 +29,13 @@ public class Order
 		this.editionCode = code;
 	}
 
-	public Collection<Item> getItems()
+	public String getPricingDuration()
 	{
-		return items;
+		return pricingDuration;
 	}
 
-	public void setItems(Collection<Item> itemsList)
+	public void setPricingDuration(String pricingDuration)
 	{
-		this.items = itemsList;
+		this.pricingDuration = pricingDuration;
 	}
 }

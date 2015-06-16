@@ -1,5 +1,6 @@
 package org.app.domain.model.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -42,7 +43,7 @@ public class User extends AbstractBase<User>
 	private Boolean isExpired = Boolean.FALSE;
 
 	// eagerly fetch props to avoid LazyInit exception while saving/updating Company object
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	private Company company;
 
 	// --------------------------------------------------------------------------------------------------

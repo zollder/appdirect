@@ -9,16 +9,18 @@ public class Creator
 	private String lastName;
 	private String email;
     private String openId;
+    private String language;
 
     // ---------------------------------------------------------------------------------------------
     public Creator() {}
 
-    public Creator(String firstName, String lastName, String email, String openId)
+    public Creator(String firstName, String lastName, String email, String openId, String lang)
     {
     	this.lastName = lastName;
     	this.firstName = firstName;
     	this.email = email;
         this.openId = openId;
+        this.setLanguage(lang);
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -60,5 +62,15 @@ public class Creator
 	public void setOpenId(String openId)
 	{
 		this.openId = openId;
+	}
+
+	public String getLanguage()
+	{
+		return language;
+	}
+
+	public void setLanguage(String language)
+	{
+		this.language = language;
 	}
 }

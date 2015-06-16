@@ -24,11 +24,7 @@ public class UserServiceImpl implements UserService
 	@Transactional(readOnly = true)
 	public User loadByPrimaryKey(Integer key)
 	{
-    	User user = userRepository.findOne(key);
-		if (user == null)
-			throw new DataNotFoundException("User not found, key: " + String.valueOf(key));
-
-		return user;
+    	return userRepository.findOne(key);
 	}
 
     // ---------------------------------------------------------------------------------------------
@@ -36,11 +32,7 @@ public class UserServiceImpl implements UserService
 	@Transactional(readOnly = true)
 	public User loadByOpenId(String openId)
 	{
-    	User user = userRepository.findByOpenId(openId);
-		if (user == null)
-			throw new DataNotFoundException("User not found, openId: " + openId);
-
-		return user;
+    	return userRepository.findByOpenId(openId);
 	}
 
     // ---------------------------------------------------------------------------------------------
@@ -48,11 +40,7 @@ public class UserServiceImpl implements UserService
 	@Transactional(readOnly = true)
 	public User loadByAccountId(String accountId)
 	{
-    	User user = userRepository.findByAccountId(accountId);
-		if (user == null)
-			throw new DataNotFoundException("User not found, accountId: " + accountId);
-
-		return user;
+    	return userRepository.findByAccountId(accountId);
 	}
 
     // ---------------------------------------------------------------------------------------------
@@ -60,11 +48,7 @@ public class UserServiceImpl implements UserService
 	@Transactional(readOnly = true)
 	public List<User> findAll()
 	{
-    	List<User> users = userRepository.findAll();
-		if ((users == null) || users.isEmpty())
-			throw new DataNotFoundException(String.format(this.getClass() + "record(s) not found"));
-
-		return users;
+    	return userRepository.findAll();
 	}
 
     // ---------------------------------------------------------------------------------------------

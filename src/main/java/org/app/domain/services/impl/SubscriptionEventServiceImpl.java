@@ -1,6 +1,7 @@
 package org.app.domain.services.impl;
 
 import javax.persistence.EntityExistsException;
+import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
 import org.app.domain.enums.ErrorCodeEnum;
@@ -29,6 +30,7 @@ public class SubscriptionEventServiceImpl implements SubscriptionEventService
 
 	// ---------------------------------------------------------------------------------------------
 	@Override
+	@Transactional
 	public Response createSubscription(String eventUrl)
 	{
 		logger.debug(String.format("Processing order event with event URL: %s", eventUrl));

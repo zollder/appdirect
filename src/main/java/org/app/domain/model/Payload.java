@@ -11,16 +11,18 @@ public class Payload
 	private Company company;	// 'create' events only
 	private Order order;		// 'create' and 'change' events only
 	private Notice notice;		// 'status' events only
+	private Configuration configuration;
 
 	// --------------------------------------------------------------------------------------------------
 	public Payload() {}
 
-	public Payload(Account account, Company company, Order order, Notice notice)
+	public Payload(Account account, Company company, Order order, Notice notice, Configuration config)
 	{
 		this.notice = notice;
 		this.order = order;
 		this.company = company;
 		this.account = account;
+		this.setConfiguration(config);
 	}
 
 	// --------------------------------------------------------------------------------------------------
@@ -62,5 +64,15 @@ public class Payload
 	public void setNotice(Notice notice)
 	{
 		this.notice = notice;
+	}
+
+	public Configuration getConfiguration()
+	{
+		return configuration;
+	}
+
+	public void setConfiguration(Configuration configuration)
+	{
+		this.configuration = configuration;
 	}
 }
