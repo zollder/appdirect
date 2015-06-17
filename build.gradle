@@ -1,9 +1,13 @@
 
+/*-------------------------------------------------------------------------------------------*/
+/* Plugins */
+/*-------------------------------------------------------------------------------------------*/
 apply plugin: 'base'
 apply plugin: 'war'		// extends java to build war
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'com.bmuschko.tomcat'
+apply plugin: 'com.bmuschko.cargo'
 
 sourceCompatibility = 1.8
 version = '1.0'
@@ -14,10 +18,11 @@ war.archiveName "appdirect.war"
 	    version =  version
 	}
 	
-	repositories {
-	    mavenCentral()
-	}
+	repositories { mavenCentral() }
 	
+	/*-------------------------------------------------------------------------------------------*/
+	/* Versions */
+	/*-------------------------------------------------------------------------------------------*/
 	ext {
 		junitVersion = '4.+'
 		logbackVersion = '1.1.2'
@@ -39,7 +44,12 @@ war.archiveName "appdirect.war"
 		oauthSignpostVersion = '1.2.1.2'
 	}
 
-	// required to deploy to embedded tomcat (optional, use tomcatRunWar to start and deploy)
+	/*-------------------------------------------------------------------------------------------*/
+	/* Allows deployments to embedded tomcat (optional)
+	 * Use tomcatRunWar to build, create a war and deploy it to the embedded tomcat instance.
+	 * Run "gradle tasks" to get more details. */
+	/*-------------------------------------------------------------------------------------------*/
+	// 
     buildscript {
 	    repositories {
 	    	mavenCentral()
@@ -48,9 +58,13 @@ war.archiveName "appdirect.war"
 	
 	    dependencies {
 	        classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.2'
+	        classpath 'com.bmuschko:gradle-cargo-plugin:2.1.1'
 	    }
 	}
 
+	/*-------------------------------------------------------------------------------------------*/
+	/* Dependencies */
+	/*-------------------------------------------------------------------------------------------*/
 	dependencies {
 		tomcat	"org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
 				"org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
@@ -88,6 +102,36 @@ war.archiveName "appdirect.war"
 				"oauth.signpost:signpost-core:$oauthSignpostVersion"
 	}
 
+	/*-------------------------------------------------------------------------------------------*/
+	/* Manages deployments to the local and remote tomcat instances.
+	 * Run "gradle tasks" for cargo task details. */
+	/*-------------------------------------------------------------------------------------------*/
+	cargo {
+	    containerId = 'tomcat7x'
+	    port = 8080
+	
+	    deployable { context = 'appdirect' }
+	
+	    local {
+	        homeDir = file('/home/zollder/soft/tomcat-rest')
+	        outputFile = file('build/output.log')
+	        timeout = 60000
+	
+	        containerProperties {
+	            property 'cargo.tomcat.ajp.port', 8080
+	        }
+	    }
+		
+		remote {
+			hostname = 'localhost'
+			username = 'admin2'
+			password = 'admin2'
+		}
+	}
+
+	/*-------------------------------------------------------------------------------------------*/
+	/* Unit and integration test configuration (todo). */
+	/*-------------------------------------------------------------------------------------------*/
 	test { systemProperties 'property': 'value' }
 	
 	uploadArchives {
@@ -98,4 +142,7 @@ war.archiveName "appdirect.war"
 	    }
 	}
 
+	/*-------------------------------------------------------------------------------------------*/
+	/* Allows creation of executable jar. */
+	/*-------------------------------------------------------------------------------------------*/
 	task wrapper(type: Wrapper) { gradleVersion = '2.3' }
