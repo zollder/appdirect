@@ -1,13 +1,10 @@
 package org.app.domain.services.impl;
 
-import oauth.signpost.OAuthConsumer;
-
 import org.apache.log4j.Logger;
 import org.app.domain.model.Creator;
 import org.app.domain.model.entities.User;
 import org.app.domain.services.EventDataService;
 import org.app.domain.utils.Utils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth.common.signature.SharedConsumerSecretImpl;
 import org.springframework.security.oauth.consumer.BaseProtectedResourceDetails;
@@ -22,9 +19,6 @@ public class EventDataServiceImpl implements EventDataService
 
     @Value("${oauth.consumer.secret}")
     private String secret;
-
-	@Autowired
-    private OAuthConsumer oAuthConsumer;
 
 	private OAuthRestTemplate oauthRestTemplate;
 

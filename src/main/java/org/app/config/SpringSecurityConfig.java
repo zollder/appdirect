@@ -33,11 +33,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter
 
     @Bean
     public OAuthConsumer oAuthConsumer()
-    {	return new DefaultOAuthConsumer(key, secret);	}
+    {
+    	return new DefaultOAuthConsumer(key, secret);
+    }
 
 	@Bean
 	public AuthenticationUserDetailsService<OpenIDAuthenticationToken> openIdUserDetailsService()
-	{	return new OpenIdUserSecurityService();	}
+	{
+		return new OpenIdUserSecurityService();
+	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception
