@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `user`
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `user`
-VALUES (1,'d9acd48369a1a20280c8c3b6921d8d8a','Admin','User','admin@email.com',1,0,2);
+VALUES (1,'d9acd48369a1a20280c8c3b6921d8d8a','Admin','User','admin@email.com','26346e0e-8d59-4890-1234-9931ee0987654',1,0);
 
 -- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 DROP TABLE IF EXISTS `company`;

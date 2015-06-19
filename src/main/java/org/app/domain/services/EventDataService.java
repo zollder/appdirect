@@ -1,5 +1,6 @@
 package org.app.domain.services;
 
+import org.app.domain.exceptions.PayloadDataException;
 import org.app.domain.model.Creator;
 import org.app.domain.model.entities.User;
 
@@ -16,5 +17,5 @@ public interface EventDataService
 	<T> T getEvent(String url, Class<T> resultType) throws Exception;
 
 	/** Maps {@link Creator} fields to {@link User} fields. */
-	public User mapCreatorToUser(Creator creator, User user);
+	public User mapCreatorToUser(Creator creator, User user) throws PayloadDataException;
 }

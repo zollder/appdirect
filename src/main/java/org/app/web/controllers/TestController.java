@@ -38,7 +38,7 @@ public class TestController
 		event.setType(EventTypeEnum.SUBSCRIPTION_ORDER);
 		event.setFlag(FlagEnum.DEVELOPMENT.name());
 		event.setMarketplace(new Marketplace("APPDIRECT", "https://www.appdirect.com"));
-		event.setCreator(new Creator("FName", "LName", "creator@email.com", "test-ID", "EN"));
+		event.setCreator(new Creator("FName", "LName", "creator@email.com", "https://www.appdirect.com/openid/id/a2d05577-23ac-42d7-b031-097721305205", "EN"));
 
 		Payload payload = new Payload();
 		payload.setCompany(new Company("US", "Integration", "e@mail.com", "3456789012", null, "test-company-id"));

@@ -2,6 +2,7 @@ package org.app.domain.services.impl;
 
 import java.util.List;
 
+import org.app.domain.enums.ErrorCodeEnum;
 import org.app.domain.exceptions.DataNotFoundException;
 import org.app.domain.model.entities.Company;
 import org.app.domain.services.CompanyService;
@@ -21,11 +22,7 @@ public class CompanyServiceImpl implements CompanyService
 	@Transactional(readOnly = true)
 	public Company loadByPrimaryKey(Integer key)
 	{
-    	Company entity = companyRepository.findOne(key);
-		if (entity == null)
-			throw new DataNotFoundException("Company not found with key:" + String.valueOf(key));
-
-		return entity;
+    	return companyRepository.findOne(key);
 	}
 
     // ---------------------------------------------------------------------------------------------
@@ -33,11 +30,7 @@ public class CompanyServiceImpl implements CompanyService
 	@Transactional(readOnly = true)
 	public Company loadByName(String name)
 	{
-    	Company entity = companyRepository.findByName(name);
-		if (entity == null)
-			throw new DataNotFoundException("Company not found with name:" + name);
-
-		return entity;
+    	return companyRepository.findByName(name);
 	}
 
     // ---------------------------------------------------------------------------------------------
@@ -45,11 +38,7 @@ public class CompanyServiceImpl implements CompanyService
 	@Transactional(readOnly = true)
 	public Company loadByUuid(String uuid)
 	{
-    	Company entity = companyRepository.findByUuid(uuid);
-		if (entity == null)
-			throw new DataNotFoundException("Company not found with UUID:" + uuid);
-
-		return entity;
+    	return companyRepository.findByUuid(uuid);
 	}
 
     // ---------------------------------------------------------------------------------------------
@@ -57,14 +46,7 @@ public class CompanyServiceImpl implements CompanyService
 	@Transactional(readOnly = true)
 	public List<Company> findAll()
 	{
-    	List<Company> entity = companyRepository.findAll();
-		if ((entity == null) || entity.isEmpty())
-		{
-			String message = String.format("Company record(s) not found");
-			throw new DataNotFoundException(message);
-		}
-
-		return entity;
+    	return companyRepository.findAll();
 	}
 
     // ---------------------------------------------------------------------------------------------
@@ -86,10 +68,13 @@ public class CompanyServiceImpl implements CompanyService
     // ---------------------------------------------------------------------------------------------
 	@Override
 	@Transactional
-	public void delete(Integer key)
+	public void delete(Integer key) throws DataNotFoundException
 	{
 		if (!companyRepository.exists(key))
-			throw new DataNotFoundException("Company not found with key:" + String.valueOf(key));
+		{
+			String message = "Company not found, pk:" + String.valueOf(key);
+			throw new DataNotFoundException(this.getClass(), ErrorCodeEnum.ENTITY_NOT_FOUND.name(), message);
+		}
 
 		companyRepository.delete(key);
 	}

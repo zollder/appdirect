@@ -3,8 +3,8 @@ package org.app.domain.services.impl;
 import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.EntityExistsException;
-
+import org.app.domain.enums.ErrorCodeEnum;
+import org.app.domain.exceptions.DataExistsException;
 import org.app.domain.exceptions.DataNotFoundException;
 import org.app.domain.model.entities.User;
 import org.app.domain.services.UserService;
@@ -54,10 +54,10 @@ public class UserServiceImpl implements UserService
     // ---------------------------------------------------------------------------------------------
     @Override
 	@Transactional
-	public User save(User user) throws EntityExistsException
+	public User save(User user) throws DataExistsException
 	{
     	if (userRepository.findByOpenId(user.getOpenId()) != null)
-    		throw new EntityExistsException("User already exists.");
+    		throw new DataExistsException(this.getClass(), ErrorCodeEnum.USER_ALREADY_EXISTS.name(), "User already exists.");
 
     	// generate account ID
     	user.setAccountId(UUID.randomUUID().toString());
@@ -76,10 +76,10 @@ public class UserServiceImpl implements UserService
     // ---------------------------------------------------------------------------------------------
 	@Override
 	@Transactional
-	public void delete(Integer key)
+	public void delete(Integer key) throws DataNotFoundException
 	{
 		if (!userRepository.exists(key))
-			throw new DataNotFoundException(String.format("User not found, key: " + String.valueOf(key)));
+			throw new DataNotFoundException(this.getClass(), ErrorCodeEnum.USER_NOT_FOUND.name(), "Not found, pk:" + String.valueOf(key));
 
 		userRepository.delete(key);
 	}

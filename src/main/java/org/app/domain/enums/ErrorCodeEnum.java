@@ -11,5 +11,7 @@ public enum ErrorCodeEnum
     CONFIGURATION_ERROR,
     INVALID_RESPONSE,
     UNKNOWN_ERROR,
-    PENDING
+    PENDING,
+
+    ENTITY_NOT_FOUND
 }

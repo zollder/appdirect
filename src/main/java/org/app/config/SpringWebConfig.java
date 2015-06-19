@@ -20,7 +20,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter
 	public void addViewControllers(ViewControllerRegistry registry)
 	{
 		super.addViewControllers(registry);
-		registry.addViewController("/**").setViewName("index");
+		registry.addViewController("/").setViewName("index");
 	}
 
 	/** Static resources from both, WEB-INF and webjars (n/a yet). */

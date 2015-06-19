@@ -2,6 +2,7 @@ package org.app.domain.services;
 
 import java.util.List;
 
+import org.app.domain.exceptions.DataNotFoundException;
 import org.app.domain.model.entities.Company;
 
 //--------------------------------------------------------------------------------------------------
@@ -30,5 +31,5 @@ public interface CompanyService
 	public Company update(Company entity);
 
 	/** Deletes {@link Company} entity by specified primary key. */
-	public void delete(Integer key);
+	public void delete(Integer key) throws DataNotFoundException;
 }

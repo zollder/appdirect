@@ -3,6 +3,7 @@ package org.app.web.controllers;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.app.domain.exceptions.DataNotFoundException;
 import org.app.domain.model.entities.Company;
 import org.app.domain.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,11 +103,12 @@ public class CompanyController
 
 
 	// ----------------------------------------------------------------------------------------------
-	/** Deletes the {@link Company} resource associated to a given key. */
+	/** Deletes the {@link Company} resource associated to a given key.
+	 * @throws DataNotFoundException */
 	// ----------------------------------------------------------------------------------------------
 	@RequestMapping(value = "/{key}", method = { RequestMethod.DELETE })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable Integer key)
+	public void delete(@PathVariable Integer key) throws DataNotFoundException
 	{
 		logger.info("deleting company with primary key:" + key);
 		companyService.delete(key);

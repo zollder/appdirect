@@ -1,94 +1,84 @@
 package org.app.domain.exceptions;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 // --------------------------------------------------------------------------------------------------------
 /** Base exception class implementation. */
 // --------------------------------------------------------------------------------------------------------
-public class BaseException extends RuntimeException
+public class BaseException extends Exception
 {
-	private static final long serialVersionUID = -3737363614162576677L;
+	private static final long serialVersionUID = 1L;
 
-	protected List<Violation> violations = new ArrayList<Violation>();
+	private Class<?> className;
+	private String errorCode;
 
+	/** Default with entity name */
 	// --------------------------------------------------------------------------------------------------------
-	/** Default constructor */
-	// --------------------------------------------------------------------------------------------------------
-	public BaseException()
+	public BaseException(Class<?> name)
 	{
 		super();
+		this.className = name;
 	}
 
+	/** Default with error code */
 	// --------------------------------------------------------------------------------------------------------
-	/** Constructor with message */
-	// --------------------------------------------------------------------------------------------------------
-	public BaseException(String message)
+	public BaseException(String code)
 	{
-		this(message, (Throwable) null);
+		super();
+		this.errorCode = code;
 	}
 
+	/** Default with error code and message */
 	// --------------------------------------------------------------------------------------------------------
-	/** Constructor with message and root cause */
+	public BaseException(String code, String message)
+	{
+		super(message);
+		this.errorCode = code;
+	}
+
+	/** Constructor with entity name and error message */
 	// --------------------------------------------------------------------------------------------------------
-	public BaseException(String message, Throwable cause)
+	public BaseException(Class<?> name, String message)
+	{
+		super(message);
+		this.className = name;
+	}
+
+	/** Constructor with entity name, error code and error message */
+	// --------------------------------------------------------------------------------------------------------
+	public BaseException(Class<?> name, String code, String message)
+	{
+		super(message);
+		this.className = name;
+		this.errorCode = code;
+	}
+
+	/** Constructor with entity name, error code, error message, and exception */
+	// --------------------------------------------------------------------------------------------------------
+	public BaseException(Class<?> name, String code, String message, Throwable cause)
 	{
 		super(message, cause);
+		this.className = name;
+		this.errorCode = code;
 	}
 
 	// --------------------------------------------------------------------------------------------------------
-	/** Constructor with message */
-	// --------------------------------------------------------------------------------------------------------
-	public BaseException(String message, String violationMessageKey, Object... violationMessageArguments)
+	public String getErrorCode()
 	{
-		this(message, (Throwable) null, violationMessageKey, violationMessageArguments);
+		return errorCode;
 	}
 
-	// --------------------------------------------------------------------------------------------------------
-	/** Constructor with message */
-	// --------------------------------------------------------------------------------------------------------
-	public BaseException(String message, Throwable cause, Object...  arguments)
+	public void setErrorCode(String code)
 	{
-		this(message, cause);
-		Violation violation = new Violation();
-		violation.setArguments(arguments);
-		violations.add(violation);
+		this.errorCode = code;
 	}
 
-	// --------------------------------------------------------------------------------------------------------
-	/** Constructor with message and reported constraint violations */
-	// --------------------------------------------------------------------------------------------------------
-	public BaseException(String message, Set<javax.validation.ConstraintViolation<?>> pViolations)
+	public String getEntityName()
 	{
-		super(message);
-		for (javax.validation.ConstraintViolation<?> violation : pViolations)
-			violations.add(new Violation(violation));
+		return this.className.getSimpleName();
 	}
 
-	// --------------------------------------------------------------------------------------------------------
-	/** Constructor with message and reported constraint violations */
-	// --------------------------------------------------------------------------------------------------------
-	public BaseException(String message, Violation pViolation)
+	public void setEntityName(Class<?> entityName)
 	{
-		super(message);
-		violations.add(pViolation);
-	}
-
-	// --------------------------------------------------------------------------------------------------------
-	/** Constructor with message and reported constraint violations */
-	// --------------------------------------------------------------------------------------------------------
-	public BaseException(String message, List<Violation> pViolations)
-	{
-		super(message);
-		violations.addAll(pViolations);
-	}
-
-	// --------------------------------------------------------------------------------------------------------
-	/** Accessor */
-	// --------------------------------------------------------------------------------------------------------
-	public List<Violation> getViolations()
-	{
-		return violations;
+		this.className = entityName;
 	}
 }

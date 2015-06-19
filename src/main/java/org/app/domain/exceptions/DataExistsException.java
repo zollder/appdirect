@@ -2,15 +2,16 @@ package org.app.domain.exceptions;
 
 
 //--------------------------------------------------------------------------------------------------------------------------------
-/** Data not found exception class implementation.
- *  To be used when a data retrieval fails due to missing requested information. */
+/** DataExistsException implementation.
+*   To be used when an entity is already persisted.. */
 //--------------------------------------------------------------------------------------------------------------------------------
-public class DataNotFoundException extends BaseException
+
+public class DataExistsException extends BaseException
 {
 	private static final long serialVersionUID = 1L;
 
 	//--------------------------------------------------------------------------------------------------------------------------------
-	public DataNotFoundException(Class<?> name, String code, String message)
+	public DataExistsException(Class<?> name, String code, String message)
 	{
 		super(name, code, message);
 	}

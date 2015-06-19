@@ -2,6 +2,8 @@ package org.app.domain.services;
 
 import java.util.List;
 
+import org.app.domain.exceptions.DataExistsException;
+import org.app.domain.exceptions.DataNotFoundException;
 import org.app.domain.model.entities.User;
 
 
@@ -24,11 +26,11 @@ public interface UserService
 	public List<User> findAll();
 
 	/** Saves (inserts) given {@link User} entity. Returns saved entity. */
-	public User save(User entity);
+	public User save(User entity) throws DataExistsException;
 
 	/** Updates (merges) given {@link User} entity. Returns updated entity. */
 	public User update(User entity);
 
 	/** Deletes {@link User} entity by specified primary key. */
-	public void delete(Integer key);
+	public void delete(Integer key) throws DataNotFoundException;
 }

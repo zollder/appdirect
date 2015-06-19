@@ -14,6 +14,14 @@ public class Response
 	public Response()
 	{}
 
+	public Response(Boolean success, String error, String message)
+	{
+		this.accountIdentifier = null;
+		this.message = message;
+		this.success = success;
+		this.errorCode = error;
+	}
+
 	public Response(Boolean success, String error, String message, String accountId)
 	{
 		this.accountIdentifier = accountId;

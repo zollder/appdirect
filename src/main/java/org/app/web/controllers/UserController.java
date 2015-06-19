@@ -3,6 +3,8 @@ package org.app.web.controllers;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.app.domain.exceptions.DataExistsException;
+import org.app.domain.exceptions.DataNotFoundException;
 import org.app.domain.model.entities.User;
 import org.app.domain.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +49,12 @@ public class UserController
 	}
 
 	// ----------------------------------------------------------------------------------------------
-	/** Inserts the {@link User} resource received in the payload. */
+	/** Inserts the {@link User} resource received in the payload.
+	 * @throws DataExistsException */
 	// ----------------------------------------------------------------------------------------------
 	@RequestMapping(method = { RequestMethod.POST })
 	@ResponseBody
-	public User save(@RequestBody User user)
+	public User save(@RequestBody User user) throws DataExistsException
 	{
 		logger.info("saving user with openId:" + user.getOpenId());
 		return userService.save(user);
@@ -71,11 +74,12 @@ public class UserController
 
 
 	// ----------------------------------------------------------------------------------------------
-	/** Deletes the {@link User} resource associated to a given key. */
+	/** Deletes the {@link User} resource associated to a given key.
+	 * @throws DataNotFoundException */
 	// ----------------------------------------------------------------------------------------------
 	@RequestMapping(value = "/{key}", method = { RequestMethod.DELETE })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable Integer key)
+	public void delete(@PathVariable Integer key) throws DataNotFoundException
 	{
 		logger.info("delete user with primary key:" + key);
 		userService.delete(key);

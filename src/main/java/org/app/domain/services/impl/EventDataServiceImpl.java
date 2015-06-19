@@ -1,6 +1,7 @@
 package org.app.domain.services.impl;
 
 import org.apache.log4j.Logger;
+import org.app.domain.exceptions.PayloadDataException;
 import org.app.domain.model.Creator;
 import org.app.domain.model.entities.User;
 import org.app.domain.services.EventDataService;
@@ -26,7 +27,7 @@ public class EventDataServiceImpl implements EventDataService
 
 	// ---------------------------------------------------------------------------------------------
 	@Override
-	public User mapCreatorToUser(Creator creator, User user)
+	public User mapCreatorToUser(Creator creator, User user) throws PayloadDataException
 	{
 		user.setOpenId(Utils.extractOpenId(creator.getOpenId()));
 		user.setFirstName(creator.getFirstName());

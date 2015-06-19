@@ -1,10 +1,11 @@
 package org.app.domain.services.impl;
 
-import javax.persistence.EntityExistsException;
 import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
 import org.app.domain.enums.ErrorCodeEnum;
+import org.app.domain.exceptions.DataExistsException;
+import org.app.domain.exceptions.PayloadDataException;
 import org.app.domain.model.Response;
 import org.app.domain.model.entities.User;
 import org.app.domain.model.subscriptions.OrderEvent;
@@ -48,8 +49,8 @@ public class SubscriptionEventServiceImpl implements SubscriptionEventService
 				response = Response.success("Account creation successful", savedSubscriber.getAccountId());
 			}
 		}
-		catch (EntityExistsException ex)
-		{ response = Response.failure(ErrorCodeEnum.USER_ALREADY_EXISTS.name(), ex.getLocalizedMessage()); }
+		catch (DataExistsException | PayloadDataException ex)
+		{ response = Response.failure(ex.getErrorCode(), ex.getMessage()); }
 		catch (Exception ex)
 		{ response = Response.failure(ErrorCodeEnum.UNKNOWN_ERROR.name(), ex.getLocalizedMessage()); }
 
